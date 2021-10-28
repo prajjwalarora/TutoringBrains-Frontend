@@ -1,13 +1,88 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+
+:root {
+  --color-dark-blue: rgb(29, 53, 87);
+  --color-red: #e63946;
+  --color-light-blue: #457b9d;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: "Poppins", sans-serif;
+}
+.container {
+  max-width: 100vw;
+  min-height: 100vh;
+}
+.container-nh {
+  max-width: 100vw;
+  min-height: 30vh;
+}
+.container-inner {
+  width: 85%;
+  margin: 0 auto;
+}
+.container-inner-big {
+  width: 90%;
+  margin: 0 auto;
+}
+.btn {
+  background-color: transparent;
+  border-radius: 0.5rem;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+}
+.btn-red {
+  border: 1px solid var(--color-red);
+  color: var(--color-red);
+  transition: all 0.2s ease;
+}
+.btn-red:hover {
+  background-color: var(--color-red);
+}
+.btn-red-field {
+  padding: 1rem 2rem;
+  border: 1px solid var(--color-red);
+  background-color: var(--color-red);
+  color: #fff;
+}
+.btn-auth {
+  padding: 0.8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-blue {
+  border: 1px solid var(--color-light-blue);
+  background-color: var(--color-light-blue);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.btn-blue:hover {
+  color: #fff;
+}
+.btn-signup {
+  padding: 0.9rem 1.8rem;
+  font-size: 1.6rem;
+  font-size: 600;
+}
+hr {
+  border: none;
+  background-color: #e7e7e7;
+  height: 0.5px;
+}
+.card {
+  background-color: #fff;
+  box-shadow: 0 0 1.5rem 0.1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  border: 1px solid #e5e5e5;
 }

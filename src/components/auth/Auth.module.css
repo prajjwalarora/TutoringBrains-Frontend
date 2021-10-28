@@ -1,0 +1,51 @@
+.auth-container {
+  min-height: 85vh;
+}
+.illustration-container {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.illustration-container img {
+  height: auto;
+  width: 100%;
+}
+.auth-card-inner {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+.card-container {
+  min-height: 45rem;
+  width: 40rem;
+  position: relative;
+}
+.auth-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 1.5rem 0.1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  backface-visibility: hidden;
+  transition: all 0.2s linear;
+  perspective: 1500px;
+}
+.auth-card-signup {
+  transform: rotateY(180deg);
+}
+.show-signup .auth-card-signup {
+  transform: rotateY(0);
+}
+.show-signup .auth-card-login {
+  transform: rotateY(-180deg);
+}

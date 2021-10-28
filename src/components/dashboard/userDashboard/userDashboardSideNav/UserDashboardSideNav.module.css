@@ -1,0 +1,40 @@
+.sidenav {
+  height: 85vh;
+  width: 100%;
+}
+.sidenav ul {
+  list-style: none;
+  transform: translateY(15vh);
+}
+.sidenav ul li {
+  display: inline-block;
+  width: 70%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  background-color: rgba(168, 218, 220, 0.05);
+}
+.sidenav ul li:hover {
+  background-color: rgba(168, 218, 220, 0.2);
+}
+.sidenav ul li a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: #1d3557;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+.sidenav ul li:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+.sidenav ul li a span {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+.active-link {
+  background-color: #1d3557 !important;
+}
+.active-link a {
+  color: #fff !important;
+}

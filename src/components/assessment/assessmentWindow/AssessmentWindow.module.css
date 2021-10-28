@@ -1,0 +1,9 @@
+.assess-container {
+  padding: 5rem 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.qn-container {
+  flex-basis: 60%;
+}

@@ -1,0 +1,30 @@
+.header {
+  height: 15vh;
+  display: flex;
+  align-items: center;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-container img {
+  height: auto;
+  width: 17rem;
+}
+.user img {
+  height: 4.5rem;
+  width: 4.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.dashboard-window h1 {
+  color: #101d31;
+  font-size: 3.2em;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 80%;
+}
