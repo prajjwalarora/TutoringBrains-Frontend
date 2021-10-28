@@ -1,12 +1,17 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import classes from "./Signup.module.css";
-
+import useHttp from "../../../hooks/use-http";
+import { signup } from "../../../lib/api";
+import { toast } from "react-toastify";
+let id;
 const Signup = () => {
   const formInnerContainer = useRef();
   const formInner = useRef();
   const [formStepCount, setFormStepCount] = useState(1);
+  const {sendRequest, data, status, error} = useHttp(signup)
+  const history = useHistory()
   useEffect(() => {
     if (formStepCount <= 2) {
       formInner.current.scrollTo(
@@ -15,6 +20,52 @@ const Signup = () => {
       );
     }
   }, [formStepCount]);
+
+  useEffect(() => {
+    if(status === 'pending'){
+      id = toast.loading("Signing up...", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    else if(status === 'completed'){
+      if(!error){
+        toast.update(id, {
+          render: "Account created successfully!!",
+          type: "success",
+          isLoading: false,
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setTimeout(() => {
+          history.push("/dashboard/user");
+        }, 500)
+      }else{
+        toast.update(id, {
+          render: "Signup failed",
+          type: "error",
+          isLoading: false,
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }
+  }, [status, error, history])
   const formSubmitHandler = (event) => {
     event.preventDefault();
     const formData = Object.fromEntries(new FormData(event.target).entries());
@@ -33,12 +84,27 @@ const Signup = () => {
     if (formStepCount < 2) {
       setFormStepCount((prevCount) => prevCount + 1);
     }
+ 
     if (formStepCount === 2) {
+      if (formData.password.length < 8) {
+ 
+        return     id = toast.error("Password length is less then 8", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+    
+      }
       console.log(formData);
       // const userData = {
       //   email: formData.email,
       //   password: formData.password,
       // };
+      sendRequest(formData)
     }
   };
   return (
