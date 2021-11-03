@@ -27,7 +27,7 @@
   display: flex;
   align-items: center;
 }
-.ans-card-inner label {
+.ans-card-inner .ans-text {
   margin-left: 0.5rem;
   font-size: 1.6rem;
   color: #5c5c5c;

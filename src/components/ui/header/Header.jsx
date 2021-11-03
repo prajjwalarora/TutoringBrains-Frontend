@@ -11,7 +11,7 @@ const Header = (props) => {
           <img src={icon} alt="tutoringBrains icon" />
         </div>
         {props.isNav && <Nav />}
-        {props.isTimer && <TimerNav />}
+        {props.isTimer && <TimerNav totalTime={props.totalTime} />}
       </div>
     </div>
   );

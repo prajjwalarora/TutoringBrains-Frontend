@@ -86,3 +86,11 @@ hr {
   border-radius: 0.5rem;
   border: 1px solid #e5e5e5;
 }
+.disabled {
+  background-color: #e6e6e6;
+  pointer-events: none;
+  cursor: not-allowed !important;
+}
+.center {
+  margin: 0 auto;
+}

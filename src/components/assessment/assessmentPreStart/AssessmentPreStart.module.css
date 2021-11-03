@@ -1,0 +1,61 @@
+.pre-window {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  flex-direction: column;
+}
+.heading-container {
+  padding: 3rem;
+}
+.heading-container h3 {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+.step-card {
+  width: 40rem;
+  height: 10rem;
+  padding: 2rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-card:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+.step-card-arrow {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 10rem;
+  width: 8rem;
+  background-color: #101e32c9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.arrow-container {
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+.step-card:hover .arrow-container {
+  transform: translateX(10%);
+}
+.step-card-inner h4 {
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.step-card-inner p {
+  font-size: 1.25rem;
+}
+.step-card-inner p:last-of-type {
+  margin-left: 1rem;
+}
+.step-card-inner p span {
+  font-weight: 600;
+}
+.step-info {
+  display: flex;
+  align-items: center;
+}
