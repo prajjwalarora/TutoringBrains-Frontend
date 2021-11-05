@@ -7,7 +7,7 @@ const AssessmentPreStart = (props) => {
   const history = useHistory();
   const location = useLocation();
   const activeAssessment = (id) => {
-    history.replace(`${location.pathname}${location.search}&quizId=${id}`);
+    history.replace(`${location.pathname}${location.search}?quizId=${id}`);
   };
   return (
     <Fragment>
