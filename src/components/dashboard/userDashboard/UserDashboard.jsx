@@ -25,7 +25,7 @@ const UserDashboard = () => {
         if (time === 0) setMinute((prev) => prev - 1);
       }
     }, 1000);
-  }, [setTime, setMinute]);
+  }, [setTime, setMinute, time]);
   return (
     <div className={classes["dashboard"]}>
       <DashboardHeader />

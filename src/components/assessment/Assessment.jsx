@@ -33,7 +33,7 @@ const Assessment = () => {
     //   }
     // });
     // document.addEventListener("visibilitychange", (e) => {
-    //   console.log("BSDKA Window switch kra h mf");
+    //   console.log("Window switch");
     // });
   }, []);
   useEffect(() => {

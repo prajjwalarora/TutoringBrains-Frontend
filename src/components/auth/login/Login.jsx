@@ -131,7 +131,7 @@ const Login = () => {
           className={`${classes["form-field"]} ${classes["form-field-button"]}`}
         >
           <button type="submit" className="btn btn-blue btn-auth">
-            Login{" "}
+            Login
             <ArrowForwardIosIcon
               style={{ fontSize: "1.3rem", marginLeft: ".5rem" }}
             />

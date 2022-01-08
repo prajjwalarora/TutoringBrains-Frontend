@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import classes from "./Signup.module.css";
 import useHttp from "../../../hooks/use-http";
@@ -10,8 +10,8 @@ const Signup = () => {
   const formInnerContainer = useRef();
   const formInner = useRef();
   const [formStepCount, setFormStepCount] = useState(1);
-  const {sendRequest, data, status, error} = useHttp(signup)
-  const history = useHistory()
+  const { sendRequest, data, status, error } = useHttp(signup);
+  const history = useHistory();
   useEffect(() => {
     if (formStepCount <= 2) {
       formInner.current.scrollTo(
@@ -22,7 +22,7 @@ const Signup = () => {
   }, [formStepCount]);
 
   useEffect(() => {
-    if(status === 'pending'){
+    if (status === "pending") {
       id = toast.loading("Signing up...", {
         position: "top-right",
         autoClose: 5000,
@@ -32,9 +32,8 @@ const Signup = () => {
         draggable: true,
         progress: undefined,
       });
-    }
-    else if(status === 'completed'){
-      if(!error){
+    } else if (status === "completed") {
+      if (!error) {
         toast.update(id, {
           render: "Account created successfully!!",
           type: "success",
@@ -49,8 +48,8 @@ const Signup = () => {
         });
         setTimeout(() => {
           history.push("/dashboard/user");
-        }, 500)
-      }else{
+        }, 500);
+      } else {
         toast.update(id, {
           render: "Signup failed",
           type: "error",
@@ -65,7 +64,7 @@ const Signup = () => {
         });
       }
     }
-  }, [status, error, history])
+  }, [status, error, history]);
   const formSubmitHandler = (event) => {
     event.preventDefault();
     const formData = Object.fromEntries(new FormData(event.target).entries());
@@ -84,11 +83,10 @@ const Signup = () => {
     if (formStepCount < 2) {
       setFormStepCount((prevCount) => prevCount + 1);
     }
- 
+
     if (formStepCount === 2) {
       if (formData.password.length < 8) {
- 
-        return     id = toast.error("Password length is less then 8", {
+        return (id = toast.error("Password length is less then 8", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -96,15 +94,14 @@ const Signup = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-        });
-    
+        }));
       }
       console.log(formData);
       // const userData = {
       //   email: formData.email,
       //   password: formData.password,
       // };
-      sendRequest(formData)
+      sendRequest(formData);
     }
   };
   return (
@@ -163,14 +160,16 @@ const Signup = () => {
         <div
           className={`${classes["form-field"]} ${classes["form-field-button"]}`}
         >
-          <button type="submit" className="btn btn-blue btn-auth">
-            {formStepCount < 2 ? "Next" : "Submit"}
-            {formStepCount < 2 && (
-              <ArrowForwardIosIcon
-                style={{ fontSize: "1.3rem", marginLeft: ".5rem" }}
-              />
-            )}
-          </button>
+          {history.location.pathname.includes("signupd") && (
+            <button type="submit" className="btn btn-blue btn-auth">
+              {formStepCount < 2 ? "Next" : "Submit"}
+              {formStepCount < 2 && (
+                <ArrowForwardIosIcon
+                  style={{ fontSize: "1.3rem", marginLeft: ".5rem" }}
+                />
+              )}
+            </button>
+          )}
         </div>
       </form>
       <hr />
