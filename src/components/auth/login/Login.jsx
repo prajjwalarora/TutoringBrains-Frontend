@@ -65,7 +65,7 @@ const Login = () => {
         });
       }
     }
-  }, [status, error, data]);
+  }, [status, error, history, data]);
 
   const formSubmitHandler = (event) => {
     event.preventDefault();

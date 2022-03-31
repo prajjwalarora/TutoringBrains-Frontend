@@ -2,8 +2,13 @@
 
 :root {
   --color-dark-blue: rgb(29, 53, 87);
+  --color-font-white: #fff;
   --color-red: #e63946;
   --color-light-blue: #457b9d;
+  --color-header-bg-light: rgb(241, 250, 238, 0.5);
+  /* --color-header-bg-light: rgba(255, 255, 255, 0.08); */
+
+  --box-shadow-light: rgba(0, 0, 0, 0.1);
 }
 
 *,

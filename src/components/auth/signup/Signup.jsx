@@ -10,7 +10,7 @@ const Signup = () => {
   const formInnerContainer = useRef();
   const formInner = useRef();
   const [formStepCount, setFormStepCount] = useState(1);
-  const { sendRequest, data, status, error } = useHttp(signup);
+  const { sendRequest, status, error } = useHttp(signup);
   const history = useHistory();
   useEffect(() => {
     if (formStepCount <= 2) {

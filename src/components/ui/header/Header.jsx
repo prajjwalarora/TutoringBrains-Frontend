@@ -5,7 +5,10 @@ import TimerNav from "./timerNav/TimerNav";
 
 const Header = (props) => {
   return (
-    <div className={classes["header"]}>
+    <div
+      className={classes["header"]}
+      style={{ position: props.isSticky ? "fixed" : "" }}
+    >
       <div className={`container-inner ${classes["header-inner"]}`}>
         <div className={classes["logo-container"]}>
           <img src={icon} alt="tutoringBrains icon" />

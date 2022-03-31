@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { Route, Switch, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import AssessmentPreStart from "./assessmentPreStart/AssessmentPreStart";
 // import Footer from "../ui/footer/Footer";
 import AssessmentWindow from "./assessmentWindow/AssessmentWindow";

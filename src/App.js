@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Assessment from "./pages/AssessmentPage";
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/DashboardPage";
+import Room from "./pages/RoomPage";
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
         </Route>
         <Route path="/dashboard">
           <Dashboard />
+        </Route>
+        <Route path="/room">
+          <Room />
         </Route>
       </Switch>
     </Fragment>
