@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import FingerprintJS from "@fingerprintjs/fingerprintjs-pro";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -10,13 +12,25 @@ import classes from "./Login.module.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../../store/auth-slice";
+import { userActions } from "../../../store/user-slice";
 let id;
 const Login = () => {
   const passwordRef = useRef();
   const history = useHistory();
   const dispatch = useDispatch();
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [currDeviceFingerPrint, setCurrDeviceFingerPrint] = useState("");
   const { sendRequest, status, data, error } = useHttp(login);
+  useEffect(() => {
+    const fpPromise = FingerprintJS.load({
+      apiKey: "quubocRbTawJPe0XaD4c",
+      region: "ap",
+    });
+
+    fpPromise
+      .then((fp) => fp.get())
+      .then((result) => setCurrDeviceFingerPrint(result.visitorId));
+  }, []);
   const passwordToggleHandler = (event) => {
     if (isShowPassword) {
       setIsShowPassword((state) => !state);
@@ -52,7 +66,22 @@ const Login = () => {
           draggable: true,
           progress: undefined,
         });
-        dispatch(authActions.login({ token: data.token }));
+        console.log("user Data");
+        console.log(data);
+        dispatch(
+          userActions.setUser({
+            id: data.user["_id"],
+            name: data.user.name,
+            avatar: data.user.avatar,
+            email: data.user.email,
+            phone: data.user.phone || "",
+            role: data.user.role,
+            deviceFingerprint: data.user.deviceFingerprint,
+          })
+        );
+        dispatch(
+          authActions.login({ token: data.token, currDeviceFingerPrint })
+        );
         history.push("/dashboard/user/home");
       } else {
         toast.update(id, {
@@ -69,7 +98,7 @@ const Login = () => {
         });
       }
     }
-  }, [status, error, history, data, dispatch]);
+  }, [status, error, history, data, dispatch, currDeviceFingerPrint]);
 
   const formSubmitHandler = (event) => {
     event.preventDefault();

@@ -73,6 +73,12 @@ body {
   color: #fff;
   transition: all 0.2s ease;
 }
+.btn-dark-blue {
+  border: 1px solid var(--color-dark-blue);
+  background-color: var(--color-dark-blue);
+  color: #fff;
+  transition: all 0.2s ease;
+}
 .btn-blue:hover {
   color: #fff;
 }

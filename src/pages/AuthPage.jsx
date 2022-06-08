@@ -16,7 +16,7 @@ const AuthPage = () => {
           <AuthComponent />
         </Route>
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </Fragment>
   );
 };

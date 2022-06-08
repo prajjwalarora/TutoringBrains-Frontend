@@ -13,6 +13,7 @@ if (storeduserData) {
     email: "",
     phone: "",
     role: "",
+    deviceFingerprint: "",
   };
 }
 const userSlice = createSlice({
@@ -26,6 +27,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.phone = action.payload.phone;
       state.role = action.payload.role;
+      state.deviceFingerprint = action.payload.deviceFingerprint;
       localStorage.setItem("user", JSON.stringify(action.payload));
     },
     updateUser(state, action) {

@@ -19,24 +19,24 @@ const AdminDashboard = () => {
   const auth = useSelector((data) => data.auth);
   const params = useParams();
 
-  useEffect(() => {
-    if (auth) sendRequest({ token: auth.token });
-  }, [auth, sendRequest]);
-  console.log(data);
-  useEffect(() => {
-    if (status === "completed" && !error && data) {
-      dispatch(
-        userActions.setUser({
-          id: data.data["_id"],
-          name: data.data.name,
-          avatar: data.data.avatar,
-          email: data.data.email,
-          phone: data.data.phone || "",
-          role: data.data.role,
-        })
-      );
-    }
-  }, [dispatch, error, data, status]);
+  // useEffect(() => {
+  //   if (auth) sendRequest({ token: auth.token });
+  // }, [auth, sendRequest]);
+  // console.log(data);
+  // useEffect(() => {
+  //   if (status === "completed" && !error && data) {
+  //     dispatch(
+  //       userActions.setUser({
+  //         id: data.data["_id"],
+  //         name: data.data.name,
+  //         avatar: data.data.avatar,
+  //         email: data.data.email,
+  //         phone: data.data.phone || "",
+  //         role: data.data.role,
+  //       })
+  //     );
+  //   }
+  // }, [dispatch, error, data, status]);
 
   const onCreateAssessmentClickHandler = () => {
     console.log("dd");

@@ -69,6 +69,23 @@ export async function updateMe({ token, userData }) {
   return data.data;
 }
 
+export async function registerDevice({ token, deviceData }) {
+  console.log(token);
+  const response = await fetch(`${url}/users/registerDevice`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(deviceData),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "error, Please verify request.");
+  }
+  return data.data;
+}
+
 export async function getAssessment({ token, assessmentId }) {
   const response = await fetch(`${url}/assessments/${assessmentId}`, {
     method: "GET",
