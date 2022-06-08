@@ -18,6 +18,27 @@ const Participant = (props) => {
   // };
 
   useEffect(() => {
+    // setInterval(() => {
+    //   const canvas = document.createElement("canvas");
+    //   var context = canvas.getContext("2d");
+    //   canvas.width = 400;
+    //   canvas.height = 800;
+    //   context.drawImage(videoRef.current, 0, 0, 400, 800);
+    //   var data = canvas.toDataURL("image/jpeg");
+    //   fetch("http://localhost:8080/api/v1/auth/authImage", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       userId: "abc",
+    //       image: data,
+    //     }),
+    //   });
+    // }, 10000);
+  }, [props.participant]);
+
+  useEffect(() => {
     let video = videoRef.current;
     video.srcObject = props.participant.stream;
     video.addEventListener("loadedmetadata", () => {

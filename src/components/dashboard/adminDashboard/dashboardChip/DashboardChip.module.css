@@ -1,0 +1,151 @@
+.card-outer {
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px 2px rgba(29, 53, 87, 0.05);
+  background-color: rgba(16, 30, 50, 0.1);
+  overflow: hidden;
+  min-height: 10rem;
+}
+.card {
+  background-color: #fff;
+  height: 10rem;
+  /* border: 1px solid rgba(16, 30, 50, 0.1); */
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+}
+.arc {
+  height: 5rem;
+  width: 8rem;
+  /* border-radius: 50%; */
+  border-top-left-radius: 3rem;
+  /* border-bottom-left-radius: 40%; */
+  position: absolute;
+  bottom: 0;
+  right: 0%;
+  text-align: center;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s ease-in-out;
+  /* transform: translate(50%, 50%); */
+}
+.arc-1 {
+  background-color: #101e32c9;
+}
+.arc-2 {
+  background-color: rgba(255, 166, 0, 0.758);
+}
+.arc-3 {
+  background-color: rgba(7, 7, 7, 0.758);
+}
+.arc-1:hover {
+  background-color: #101e32c9;
+}
+.arc-2:hover {
+  background-color: rgba(255, 166, 0, 0.758);
+}
+.arc-3:hover {
+  background-color: rgba(7, 7, 7, 0.958);
+}
+.card-1 {
+  background-color: rgba(16, 30, 50, 0.1);
+}
+.card-2 {
+  background-color: rgba(255, 166, 0, 0.1);
+}
+.card-3 {
+  background-color: rgba(7, 7, 7, 0.1);
+}
+.arc span {
+  display: inline-block;
+  font-size: 3rem;
+  color: #fff;
+  /* transform: translate(10%, 5%); */
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  user-select: none;
+}
+
+.text-container h3 {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+}
+.text-container h3 span {
+  display: inline-block;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(16, 30, 50, 0.3);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+}
+.card-2 .text-container h3 span {
+  background-color: rgba(255, 166, 0, 0.3);
+}
+
+.card-3 .text-container h3 span {
+  background-color: rgba(7, 7, 7, 0.3);
+}
+.timer {
+  position: absolute;
+  bottom: 10%;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  color: #101e32c9;
+}
+.timer span {
+  display: inline-block;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  font-weight: 600;
+}
+
+.chip-details {
+  background-color: #fff;
+  height: 50rem;
+  border-top: 1px solid #cccccc;
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.chip-details-closed {
+  height: 0rem;
+  border-color: transparent;
+  opacity: 0;
+}
+
+.chip-details-inner {
+  padding: 2rem;
+  /* display: flex; */
+}
+.text-info-container {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  margin-bottom: 4rem;
+  /* flex: 0 0 70%; */
+}
+
+.text-info p {
+  font-size: 1.4rem;
+}
+.text-info p span {
+  font-weight: 600;
+}
+
+.chart-container {
+  /* flex: 0 0 30%; */
+  display: flex;
+  justify-content: space-around;
+}
+
+.chart-1 {
+  flex-basis: 40%;
+}
+
+.chart-2 {
+  flex-basis: 40%;
+}

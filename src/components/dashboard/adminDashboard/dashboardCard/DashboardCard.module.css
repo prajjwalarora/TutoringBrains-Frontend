@@ -1,0 +1,86 @@
+.card {
+  background-color: #fff;
+  height: 22rem;
+  border-radius: 0.5rem;
+  /* border: 1px solid rgba(16, 30, 50, 0.1); */
+  box-shadow: 0 0 10px 2px rgba(29, 53, 87, 0.05);
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+}
+.arc {
+  height: 14rem;
+  width: 14rem;
+  /* border-radius: 50%; */
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  position: absolute;
+  bottom: -25%;
+  right: -5%;
+  text-align: center;
+  cursor: pointer;
+  /* transform: translate(50%, 50%); */
+}
+.arc-1 {
+  background-color: #101e32c9;
+}
+.arc-2 {
+  background-color: rgba(255, 166, 0, 0.758);
+}
+.arc-3 {
+  background-color: rgba(7, 7, 7, 0.758);
+}
+.card-1 {
+  background-color: rgba(16, 30, 50, 0.1);
+}
+.card-2 {
+  background-color: rgba(255, 166, 0, 0.1);
+}
+.card-3 {
+  background-color: rgba(7, 7, 7, 0.1);
+}
+.arc span {
+  display: inline-block;
+  font-size: 3.5rem;
+  color: #fff;
+  transform: translateY(25%);
+  transition: all 0.2s ease-in-out;
+}
+.arc:hover span {
+  transform: translate(20%, 25%);
+}
+.text-container h3 {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+}
+.text-container h3 span {
+  display: inline-block;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(16, 30, 50, 0.3);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+}
+.card-2 .text-container h3 span {
+  background-color: rgba(255, 166, 0, 0.3);
+}
+
+.card-3 .text-container h3 span {
+  background-color: rgba(7, 7, 7, 0.3);
+}
+.timer {
+  position: absolute;
+  bottom: 10%;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  color: #101e32c9;
+}
+.timer span {
+  display: inline-block;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  font-weight: 600;
+}

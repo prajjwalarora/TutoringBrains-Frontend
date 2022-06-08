@@ -1,0 +1,18 @@
+.dashboard {
+  background-color: rgba(241, 250, 238, 0.8);
+  min-height: 100vh;
+}
+.dashboard-inner {
+  display: flex;
+}
+.dashboard-sidebar {
+  width: 20%;
+}
+.dashboard-main {
+  padding: 3rem 0;
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 2rem;
+  justify-content: space-between;
+}

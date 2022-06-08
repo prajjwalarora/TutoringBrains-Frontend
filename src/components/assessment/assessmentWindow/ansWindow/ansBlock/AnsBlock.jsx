@@ -5,6 +5,7 @@ const AnsBlock = (props) => {
       className={`${classes["ans-block"]} ${
         props.isCompleted ? classes["ans-block-completed"] : ""
       }`}
+      onClick={props.onClickHandler}
     >
       <span>{props.qnNum}</span>
     </div>

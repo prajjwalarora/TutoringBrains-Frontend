@@ -15,20 +15,13 @@ const AssessmentPreStart = (props) => {
       <div className="container-nh">
         <div className={`${classes["pre-window"]} container-inner`}>
           <div className={classes["heading-container"]}>
+            <h2>{props.quizHeading}</h2>
             <h3>Upcomings</h3>
           </div>
           {props.quizInfo.map((info, i) => (
             <div
               key={info.id}
-              className={`card ${classes["step-card"]} ${
-                i !== 0
-                  ? !info.isCompleted
-                    ? "disabled"
-                    : ""
-                  : info.isCompleted
-                  ? "disabled"
-                  : ""
-              }`}
+              className={`card ${classes["step-card"]}`}
               onClick={activeAssessment.bind(null, info.id)}
             >
               <div className={classes["step-card-inner"]}>
@@ -36,14 +29,14 @@ const AssessmentPreStart = (props) => {
                   <h4>{`${i + 1}. ${info.name}`}</h4>
                   <div className={classes["step-info"]}>
                     <p>
-                      <span>Total Questions:</span> 20
+                      <span>Total Questions:</span> {info.totalQuestions}
                     </p>
                     <p>
-                      <span>Total Time:</span> 20min
+                      <span>Total Time:</span> {info.timeDuration} min
                     </p>
                   </div>
                 </div>
-                {i !== 0
+                {/* {i !== 0
                   ? info.isCompleted && (
                       <div className={classes["step-card-arrow"]}>
                         <div className={classes["arrow-container"]}>
@@ -61,7 +54,14 @@ const AssessmentPreStart = (props) => {
                           />
                         </div>
                       </div>
-                    )}
+                    )} */}
+                <div className={classes["step-card-arrow"]}>
+                  <div className={classes["arrow-container"]}>
+                    <KeyboardArrowRightIcon
+                      style={{ fontSize: 50, color: "#fff" }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           ))}

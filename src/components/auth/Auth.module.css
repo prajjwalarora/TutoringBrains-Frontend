@@ -25,6 +25,7 @@
 .card-container {
   min-height: 45rem;
   width: 40rem;
+  perspective: 15000px;
   position: relative;
 }
 .auth-card {
@@ -38,7 +39,6 @@
   padding: 1rem 1.5rem;
   backface-visibility: hidden;
   transition: all 0.2s linear;
-  perspective: 1500px;
 }
 .auth-card-signup {
   transform: rotateY(180deg);

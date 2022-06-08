@@ -1,4 +1,4 @@
-const url = `http://192.168.29.231:8080/api/v1`;
+const url = `http://localhost:8080/api/v1`;
 
 export async function signup(userData) {
   const response = await fetch(`${url}/users/signup`, {
@@ -33,6 +33,58 @@ export async function login(userData) {
   }
   return data.data;
 }
+
+export async function getMe({ token }) {
+  const response = await fetch(`${url}/users/me`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    // body: JSON.stringify(userData),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "error, Please verify your credentials.");
+  }
+  return data.data;
+}
+
+export async function updateMe({ token, userData }) {
+  console.log(token);
+  const response = await fetch(`${url}/users/me`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(userData),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "error, Please verify your credentials.");
+  }
+  return data.data;
+}
+
+export async function getAssessment({ token, assessmentId }) {
+  const response = await fetch(`${url}/assessments/${assessmentId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    // body: JSON.stringify(userData),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "error, While fetching assessment.");
+  }
+  return data.data;
+}
+
 // export async function getUser(userData) {
 //   const response = await fetch(`${url}/user/${userData.userId}`, {
 //     headers: {

@@ -8,10 +8,13 @@ import useHttp from "../../../hooks/use-http";
 import { login } from "../../../lib/api";
 import classes from "./Login.module.css";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../../store/auth-slice";
 let id;
 const Login = () => {
   const passwordRef = useRef();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const { sendRequest, status, data, error } = useHttp(login);
   const passwordToggleHandler = (event) => {
@@ -49,7 +52,8 @@ const Login = () => {
           draggable: true,
           progress: undefined,
         });
-        history.push("/dashboard/user");
+        dispatch(authActions.login({ token: data.token }));
+        history.push("/dashboard/user/home");
       } else {
         toast.update(id, {
           render: "Login failed",
@@ -65,7 +69,7 @@ const Login = () => {
         });
       }
     }
-  }, [status, error, history, data]);
+  }, [status, error, history, data, dispatch]);
 
   const formSubmitHandler = (event) => {
     event.preventDefault();

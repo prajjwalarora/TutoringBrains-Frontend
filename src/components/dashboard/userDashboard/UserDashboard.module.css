@@ -1,9 +1,10 @@
 .dashboard {
   background-color: rgba(241, 250, 238, 0.8);
-  min-height: 100vh;
+  height: 100vh;
 }
 .dashboard-inner {
   display: flex;
+  height: 85vh;
 }
 .dashboard-sidebar {
   width: 20%;

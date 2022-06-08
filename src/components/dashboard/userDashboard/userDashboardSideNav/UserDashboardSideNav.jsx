@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
@@ -9,28 +9,44 @@ const UserDashboardSideNav = () => {
   return (
     <div className={classes["sidenav"]}>
       <ul>
-        <li className={classes["active-link"]}>
-          <Link to="/dashboard">
+        <li>
+          <NavLink
+            to="/dashboard/user/home"
+            className={classes["link"]}
+            activeClassName={classes["active-link"]}
+          >
             <DashboardRoundedIcon style={{ fontSize: 18 }} />
             <span>Dashboard</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/dashboard">
+          <NavLink
+            to="/dashboard/user/classes"
+            className={classes["link"]}
+            activeClassName={classes["active-link"]}
+          >
             <SchoolRoundedIcon style={{ fontSize: 18 }} /> <span>Classes</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/dashboard">
-            <AssignmentRoundedIcon style={{ fontSize: 18 }} />{" "}
+          <NavLink
+            to="/dashboard/user/assessments"
+            className={classes["link"]}
+            activeClassName={classes["active-link"]}
+          >
+            <AssignmentRoundedIcon style={{ fontSize: 18 }} />
             <span>Assessment</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/dashboard">
-            <ManageAccountsRoundedIcon style={{ fontSize: 18 }} />{" "}
+          <NavLink
+            to="/dashboard/user/account"
+            className={classes["link"]}
+            activeClassName={classes["active-link"]}
+          >
+            <ManageAccountsRoundedIcon style={{ fontSize: 18 }} />
             <span>Account</span>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>

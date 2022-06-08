@@ -1,3 +1,4 @@
+import React from "react";
 import icon from "../../../assets/images/tutoring-brains-icon.svg";
 import classes from "./Header.module.css";
 import Nav from "./nav/Nav";
@@ -20,4 +21,4 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

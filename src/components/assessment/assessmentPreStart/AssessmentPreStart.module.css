@@ -6,7 +6,13 @@
 }
 .heading-container {
   padding: 3rem;
+  text-align: center;
 }
+.heading-container h2 {
+  font-size: 3rem;
+  text-transform: uppercase;
+}
+
 .heading-container h3 {
   font-size: 2rem;
   text-transform: uppercase;

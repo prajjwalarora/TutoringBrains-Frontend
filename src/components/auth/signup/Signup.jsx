@@ -160,7 +160,7 @@ const Signup = () => {
         <div
           className={`${classes["form-field"]} ${classes["form-field-button"]}`}
         >
-          {history.location.pathname.includes("signupd") && (
+          {history.location.pathname.includes("signup") && (
             <button type="submit" className="btn btn-blue btn-auth">
               {formStepCount < 2 ? "Next" : "Submit"}
               {formStepCount < 2 && (

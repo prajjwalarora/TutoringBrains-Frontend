@@ -50,8 +50,6 @@ const Participants = (props) => {
           isMicEnabled={props.isMicEnabled}
         />
       ))}
-
-      {/* <Participant name="Charu Khandelwal" /> */}
     </div>
   );
 };

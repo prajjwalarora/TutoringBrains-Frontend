@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import icon from "../../../assets/images/tutoring-brains-icon.svg";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import classes from "./DashboardHeader.module.css";
 const DashboardHeader = () => {
+  const user = useSelector((data) => data.user);
   return (
     <div className={classes["header"]}>
       <div className={`container-inner-big ${classes["header-inner"]}`}>
@@ -8,11 +11,10 @@ const DashboardHeader = () => {
           <img src={icon} alt="tutoringBrains icon" />
         </div>
         <div className={classes["header-right"]}>
-          <div className={classes["dashboard-window"]}>
-            <h1>Upcoming Assesment</h1>
-          </div>
           <div className={classes["user"]}>
-            <img src="https://i.pravatar.cc/300" alt="avatar" />
+            <p>{user.name.split(" ")[0]}</p>
+            {/* <img src="https://i.pravatar.cc/300" alt="avatar" /> */}
+            <AccountCircleIcon style={{ fontSize: 30 }} />
           </div>
         </div>
       </div>

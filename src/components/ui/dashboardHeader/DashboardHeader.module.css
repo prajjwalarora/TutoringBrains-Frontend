@@ -18,13 +18,22 @@
   object-fit: cover;
   border-radius: 50%;
 }
-.dashboard-window h1 {
-  color: #101d31;
-  font-size: 3.2em;
-}
+
 .header-right {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-basis: 80%;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.user p {
+  margin-right: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
 }

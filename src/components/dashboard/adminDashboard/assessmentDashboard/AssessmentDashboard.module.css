@@ -1,0 +1,53 @@
+.assessment-dashboard {
+  width: 80%;
+  overflow-y: scroll;
+  position: relative;
+}
+.assessment-dashboard::-webkit-scrollbar {
+  display: none;
+}
+.header {
+  margin-bottom: 0rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 {
+  color: #101d31;
+  font-size: 3.2em;
+}
+.assessment-card-container {
+  padding: 3rem 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.assessment-null {
+  font-size: 1.4rem;
+}
+
+.assessment-past .assessment-card-container {
+  padding: 3rem 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.new-assessment-btn {
+  display: flex;
+  align-items: center;
+  padding: 1rem 3rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.new-assessment-btn:hover {
+  opacity: 0.8;
+}

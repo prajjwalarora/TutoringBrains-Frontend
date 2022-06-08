@@ -6,20 +6,31 @@ const AnsWindow = (props) => {
   useEffect(() => {
     let arr = [];
     for (let i = 1; i <= props.totalCount; i++) {
-      if (i <= props.completedTill) {
-        arr.push(<AnsBlock key={i} isCompleted={true} qnNum={i} />);
+      if (props.completed.includes(i)) {
+        arr.push(
+          <AnsBlock
+            key={i}
+            isCompleted={true}
+            qnNum={i}
+            onClickHandler={() => props.onChangeQn(i)}
+          />
+        );
       } else {
-        arr.push(<AnsBlock key={i} isCompleted={false} qnNum={i} />);
+        arr.push(
+          <AnsBlock
+            key={i}
+            isCompleted={false}
+            qnNum={i}
+            onClickHandler={() => props.onChangeQn(i)}
+          />
+        );
       }
     }
     setQnArr(arr);
-  }, [props.completedTill, props.totalCount]);
+  }, [props]);
   return (
     <div className={`card ${classes["ans-window"]}`}>
       <div className={`${classes["ans-window-inner"]}`}>{qnArr}</div>
-      <div className={classes["btn-container"]}>
-        <button className={`btn ${classes["btn-save"]}`}>Save</button>
-      </div>
     </div>
   );
 };

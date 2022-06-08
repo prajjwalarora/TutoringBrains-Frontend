@@ -6,7 +6,7 @@ const AssessmentPage = () => {
   return (
     <Fragment>
       <Switch>
-        <Route path="/assessment">
+        <Route path="/assessment/:assessmentId">
           <Assessment />
         </Route>
       </Switch>
