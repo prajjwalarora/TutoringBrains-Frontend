@@ -1,5 +1,5 @@
-// const url = `http://localhost:8080/api/v1`;
-const url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
+const url = `http://localhost:8080/api/v1`;
+// const url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`
 
 export async function signup(userData) {
   const response = await fetch(`${url}/users/signup`, {
