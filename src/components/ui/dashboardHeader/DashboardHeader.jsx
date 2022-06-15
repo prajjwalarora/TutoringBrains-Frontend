@@ -3,7 +3,7 @@ import icon from "../../../assets/images/tutoring-brains-icon.svg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import classes from "./DashboardHeader.module.css";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { authActions } from "../../../store/auth-slice";
 const DashboardHeader = () => {
   const [isUserClicked, setIsUserClicked] = useState(false);
@@ -31,7 +31,9 @@ const DashboardHeader = () => {
     <div className={classes["header"]}>
       <div className={`container-inner-big ${classes["header-inner"]}`}>
         <div className={classes["logo-container"]}>
-          <img src={icon} alt="tutoringBrains icon" />
+          <NavLink to="/dashboard/user/home">
+            <img src={icon} alt="tutoringBrains icon" />
+          </NavLink>
         </div>
         <div className={classes["header-right"]}>
           <div className={classes["user"]}>

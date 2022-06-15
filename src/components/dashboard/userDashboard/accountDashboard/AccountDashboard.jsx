@@ -94,6 +94,12 @@ const AccountDashboard = () => {
       });
     }
 
+    // const password = formData["current-password"];
+    // if (password.length != 8) {
+    //   return toast.error("Password Inavlid...", {
+    //     ...toastConfig,
+    //   });
+    // }
     updateUser({ token: auth.token, userData: formData });
   };
   return (
