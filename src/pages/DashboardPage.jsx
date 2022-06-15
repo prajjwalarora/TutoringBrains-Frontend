@@ -9,7 +9,11 @@ const DashboardPage = () => {
   return (
     <Fragment>
       <Switch>
-        <Route path="/dashboard/user/:section">
+        <Route path="/dashboard/user/:section" exact>
+          {user.role === "student" && <UserDashboard />}
+          {user.role === "instructor" && <AdminDashboard />}
+        </Route>
+        <Route path="/dashboard/user/:section/:action" exact>
           {user.role === "student" && <UserDashboard />}
           {user.role === "instructor" && <AdminDashboard />}
         </Route>

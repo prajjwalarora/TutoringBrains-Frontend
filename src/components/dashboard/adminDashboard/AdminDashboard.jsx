@@ -12,12 +12,15 @@ import { userActions } from "../../../store/user-slice";
 import ClassDashboard from "./classDashboard/ClassDashboard";
 import AssessmentDashboard from "./assessmentDashboard/AssessmentDashboard";
 import classes from "./AdminDashboard.module.css";
+import { useHistory } from "react-router-dom";
+import CreateAssessment from "./assessmentDashboard/createAssessment/CreateAssessment";
 
 const AdminDashboard = () => {
   const { sendRequest, status, data, error } = useHttp(getMe);
   const dispatch = useDispatch();
   const auth = useSelector((data) => data.auth);
   const params = useParams();
+  const history = useHistory();
 
   // useEffect(() => {
   //   if (auth) sendRequest({ token: auth.token });
@@ -39,8 +42,10 @@ const AdminDashboard = () => {
   // }, [dispatch, error, data, status]);
 
   const onCreateAssessmentClickHandler = () => {
-    console.log("dd");
+    history.push("/dashboard/user/assessments/create-assessment");
   };
+  console.log(params);
+
   return (
     <div className={classes["dashboard"]}>
       <DashboardHeader />
@@ -50,12 +55,14 @@ const AdminDashboard = () => {
         </div>
         {params.section === "home" && <MainDashboard />}
         {params.section === "classes" && <ClassDashboard />}
-        {params.section === "assessments" && (
+        {params.section === "assessments" && !params.action && (
           <AssessmentDashboard
             onCreateAssessmentClickHandler={onCreateAssessmentClickHandler}
           />
         )}
         {params.section === "account" && <AccountDashboard />}
+        {params.section === "assessments" &&
+          params.action === "create-assessment" && <CreateAssessment />}
       </div>
     </div>
   );

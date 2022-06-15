@@ -10,8 +10,18 @@ const ClassDashboard = () => {
           <h1>Upcoming Classes</h1>
         </div>
         <div className={classes["class-card-container"]}>
-          <DashboardCard cardType={1} statusType={1} />
-          <DashboardCard cardType={2} statusType={1} />
+          <DashboardCard
+            cardType={1}
+            statusType={1}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={2}
+            statusType={1}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
         </div>
       </div>
       <div className={classes["class-past"]}>
@@ -19,14 +29,54 @@ const ClassDashboard = () => {
           <h1>Previous Classes</h1>
         </div>
         <div className={classes["class-card-container"]}>
-          <DashboardCard cardType={3} statusType={2} />
-          <DashboardCard cardType={3} statusType={2} />
-          <DashboardCard cardType={3} statusType={2} />
-          <DashboardCard cardType={3} statusType={2} />
-          <DashboardCard cardType={3} statusType={2} />
-          <DashboardCard cardType={3} statusType={2} />
-          <DashboardCard cardType={3} statusType={2} />
-          <DashboardCard cardType={3} statusType={2} />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
+          <DashboardCard
+            cardType={3}
+            statusType={2}
+            cardData={{}}
+            onArrowClickHandler={() => {}}
+          />
         </div>
       </div>
     </div>

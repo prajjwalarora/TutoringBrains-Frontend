@@ -1,5 +1,5 @@
-// const url = `http://localhost:8080/api/v1`;
-const url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
+const url = `http://localhost:8080/api/v1`;
+// const url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
 
 export async function signup(userData) {
   const response = await fetch(`${url}/users/signup`, {
@@ -103,6 +103,47 @@ export async function getAssessment({ token, assessmentId }) {
   return data.data;
 }
 
+export async function getUnpublishedAssessment({ token }) {
+  const response = await fetch(
+    `${url}/assessments/author-only?published=false`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+      // body: JSON.stringify(userData),
+    }
+  );
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "error, While fetching assessment.");
+  }
+  return data.data;
+}
+
+export async function getPublishedAssessment({ token }) {
+  const response = await fetch(
+    `${url}/assessments/author-only?published=true`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+      // body: JSON.stringify(userData),
+    }
+  );
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "error, While fetching assessment.");
+  }
+  return data.data;
+}
+
+//
 // export async function getUser(userData) {
 //   const response = await fetch(`${url}/user/${userData.userId}`, {
 //     headers: {
@@ -133,3 +174,114 @@ export async function getAssessment({ token, assessmentId }) {
 //   }
 //   return data.data;
 // }
+
+export async function getAssessments({ token, assessmentData }) {
+  const response = await fetch(`${url}/assessments`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+  console.log(data);
+  if (!response.ok) {
+    throw new Error(data.message || "Could not get Assessment.");
+  }
+  return data.data;
+}
+
+export async function createAssessment({ token, assessmentData }) {
+  const response = await fetch(`${url}/assessments`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(assessmentData),
+  });
+
+  const data = await response.json();
+  console.log(data);
+  if (!response.ok) {
+    throw new Error(data.message || "Could not Create Assessment.");
+  }
+  return data.data;
+}
+
+export async function addSubIntoAssessment({
+  token,
+  assessmentid,
+  assessmentData,
+}) {
+  const response = await fetch(`${url}/assessments/${assessmentid}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(assessmentData),
+  });
+
+  const data = await response.json();
+  console.log(data);
+  if (!response.ok) {
+    throw new Error(data.message || "Could not Create Assessment.");
+  }
+  return data.data;
+}
+
+export async function createSubject({ token, subjectData }) {
+  const response = await fetch(`${url}/subjects`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(subjectData),
+  });
+
+  const data = await response.json();
+  console.log(data);
+  if (!response.ok) {
+    throw new Error(data.message || "Could not Create Subject.");
+  }
+  return data.data;
+}
+
+export async function createQuestion({ token, questionData }) {
+  const response = await fetch(`${url}/questions`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(questionData),
+  });
+
+  const data = await response.json();
+  console.log(data);
+  if (!response.ok) {
+    throw new Error(data.message || "Could not Create Question.");
+  }
+  return data.data;
+}
+
+export async function addSubIntoSubject({ token, subjectid, subjectData }) {
+  const response = await fetch(`${url}/subjects/${subjectid}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(subjectData),
+  });
+
+  const data = await response.json();
+  console.log(data);
+  if (!response.ok) {
+    throw new Error(data.message || "Could not Add to Subject.");
+  }
+  return data.data;
+}

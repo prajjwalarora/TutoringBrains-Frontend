@@ -16,7 +16,7 @@ import DebugPage from "./pages/DebugPage";
 import { useHistory } from "react-router-dom";
 import DeviceRegistrationPage from "./pages/DeviceRegistrationPage";
 import InvalidDevicePage from "./pages/InvalidDevicePage";
-// import { authActions } from "./store/auth-slice";
+import { authActions } from "./store/auth-slice";
 
 function App() {
   const { sendRequest, status, data, error } = useHttp(getMe);
@@ -24,12 +24,12 @@ function App() {
   const history = useHistory();
   const auth = useSelector((data) => data.auth);
   const user = useSelector((data) => data.user);
-  console.log(user);
-  console.log(auth);
+
   useEffect(() => {
     if (auth && auth.token != null && auth.isLoggedIn === true)
       sendRequest({ token: auth.token });
   }, [auth, sendRequest]);
+
   useEffect(() => {
     if (status === "completed" && !error && data) {
       dispatch(
@@ -43,8 +43,11 @@ function App() {
           deviceFingerprint: data.data.deviceFingerprint,
         })
       );
+    } else if (status === "completed" && error) {
+      dispatch(authActions.logout());
+      history.push("/");
     }
-  }, [dispatch, error, data, status]);
+  }, [dispatch, error, data, status, history]);
 
   useEffect(() => {
     if (
@@ -58,7 +61,7 @@ function App() {
       auth.currDeviceFingerPrint &&
       user.deviceFingerprint !== auth.currDeviceFingerPrint
     ) {
-      history.push("/invalidDevice");
+      history.push("/registerDevice");
     }
   }, [user, history, auth]);
   return (
