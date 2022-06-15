@@ -10,6 +10,7 @@ import classes from "./AccountDashboard.module.css";
 
 let id;
 const AccountDashboard = () => {
+  const [message, setMessage] = useState("");
   const {
     sendRequest: updateUser,
     status: updateUserStatus,
@@ -84,6 +85,15 @@ const AccountDashboard = () => {
     event.preventDefault();
 
     const formData = Object.fromEntries(new FormData(event.target).entries());
+    console.log(formData);
+
+    const mobileNumber = formData["phone"];
+    if (mobileNumber.length != 10) {
+      return toast.error("Mobile Number Inavlid...", {
+        ...toastConfig,
+      });
+    }
+
     updateUser({ token: auth.token, userData: formData });
   };
   return (
@@ -133,6 +143,7 @@ const AccountDashboard = () => {
               <div className={classes["account-form-field"]}>
                 <label htmlFor="name">Name</label>
                 <input
+                  pattern="[a-z A-Z]*"
                   type="text"
                   name="name"
                   id="name"
@@ -153,7 +164,7 @@ const AccountDashboard = () => {
               <div className={classes["account-form-field"]}>
                 <label htmlFor="phone">Phone Number</label>
                 <input
-                  type="text"
+                  type="number"
                   name="phone"
                   id="phone"
                   defaultValue={user.phone}
