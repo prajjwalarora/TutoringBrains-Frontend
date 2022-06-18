@@ -102,6 +102,7 @@ const Room = () => {
         newPeer = new Peer(user.id, {
           path: "/api/v1/peerjs",
           host: "https://tutoringbrains-backend-1.herokuapp.com/",
+          port: "5598",
         });
       }
       newPeer.on("open", (id) => {
@@ -253,6 +254,7 @@ const Room = () => {
           ssPeer = new Peer(user.id, {
             path: "/api/v1/peerjs",
             host: "https://tutoringbrains-backend-1.herokuapp.com/",
+            port: "5598",
           });
         }
 
