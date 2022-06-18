@@ -85,7 +85,7 @@ const AccountDashboard = () => {
     event.preventDefault();
 
     const formData = Object.fromEntries(new FormData(event.target).entries());
-    console.log(formData);
+    // console.log(formData);
 
     const mobileNumber = formData["phone"];
     if (mobileNumber.length !== 10) {
