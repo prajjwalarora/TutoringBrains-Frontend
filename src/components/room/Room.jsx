@@ -252,7 +252,7 @@ const Room = () => {
             port: "8080",
           });
         } else {
-          ssPeer = new Peer(user.id, {
+          ssPeer = new Peer(`ss-${user.id}`, {
             secure: true,
             path: "/api/v1/peerjs",
             host: "tutoringbrains-backend-1.herokuapp.com",
