@@ -1,5 +1,11 @@
-// const url = `http://localhost:8080/api/v1`;
-const url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
+let url;
+// const url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
+
+if (process.env.NODE_ENV === "development") {
+  url = `http://192.168.29.30:8080/api/v1`;
+} else {
+  url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
+}
 
 export async function signup(userData) {
   const response = await fetch(`${url}/users/signup`, {

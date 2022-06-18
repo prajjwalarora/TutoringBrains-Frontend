@@ -55,7 +55,7 @@ const Participant = (props) => {
         ref={videoRef}
         style={{ width: "100%", height: "100%", objectFit: "cover" }}
       />
-      {/* <p className={classes["name"]}>{props.name}</p> */}
+      <p className={classes["name"]}>{props.name}</p>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import io from "socket.io-client";
+import { useSelector } from "react-redux";
 import Peer from "peerjs";
 import { useParams, useHistory } from "react-router-dom";
 import Participants from "./participants/Participants";
@@ -11,26 +12,38 @@ const Room = () => {
   const { roomId: ROOM_ID } = useParams();
   const [socket, setSocket] = useState(null);
   const [peer, setPeer] = useState(null);
+
+  const user = useSelector((data) => data.user);
   const [participants, setParticipants] = useState([]);
+  const [ssParticipant, setSSParticipant] = useState(null);
   const [videoStream, setVideoStream] = useState(null);
   const [isMouseOver, setIsMouseOver] = useState(true);
   const [isCamEnabled, setIsCamEnabled] = useState(false);
   const [isMicEnabled, setIsMicEnabled] = useState(false);
   const [defaultUser, setDefaultUser] = useState();
   const history = useHistory();
+
   const addVideoStream = useCallback(
-    function (stream, call) {
+    function (stream, call, type = "user") {
       if (call) {
-        console.log("new user");
-        console.log(call.peer);
-        setParticipants((prev) => {
-          const res = prev.filter((p) => p.user && p.user.peerId === call.peer);
-          if (res.length === 0) {
-            return [...prev, { user: { peerId: call.peer }, stream }];
-          } else {
-            return prev;
-          }
-        });
+        if (type === "user") {
+          console.log("new user");
+          console.log(call.peer);
+          setParticipants((prev) => {
+            const res = prev.filter(
+              (p) => p.user && p.user.peerId === call.peer
+            );
+            if (res.length === 0) {
+              return [...prev, { user: { peerId: call.peer }, stream }];
+            } else {
+              return prev;
+            }
+          });
+        } else if (type === "screen-share") {
+          setSSParticipant((prev) => {
+            return { user: { peerId: call.peer }, stream };
+          });
+        }
       } else {
         setParticipants((prev) => [...prev, { stream }]);
       }
@@ -48,7 +61,12 @@ const Room = () => {
         call.on("stream", (userVideoStream) => {
           console.log("got stream");
           console.log(call);
-          addVideoStream(userVideoStream, call);
+          const userIdArr = userId.split("-");
+          if (userIdArr.length > 1) {
+            addVideoStream(userVideoStream, call, "screen-share");
+          } else {
+            addVideoStream(userVideoStream, call);
+          }
         });
       }
     },
@@ -56,38 +74,43 @@ const Room = () => {
   );
 
   useEffect(() => {
-    const newSocket = io(`http://192.168.29.30:8080/`);
+    let newSocket;
+    if (process.env.NODE_ENV === "development") {
+      newSocket = io(`http://192.168.29.30:8080/`);
+    } else {
+      newSocket = io(`https://tutoringbrains-backend-1.herokuapp.com/`);
+    }
     setSocket(newSocket);
     return () => newSocket.close();
   }, [setSocket]);
   useEffect(() => {
     let newPeer = null;
     if (socket) {
-      newPeer = new Peer(undefined, {
-        path: "/api/v1/peerjs",
-        host: "/",
-        port: "8080",
-      });
+      // newPeer = new Peer(user.id, {
+      //   path: "/api/v1/peerjs",
+      //   host: "/",
+      //   port: "8080",
+      // });
+
+      if (process.env.NODE_ENV === "development") {
+        newPeer = new Peer(user.id, {
+          path: "/api/v1/peerjs",
+          host: "/",
+          port: "8080",
+        });
+      } else {
+        newPeer = new Peer(user.id, {
+          path: "/api/v1/peerjs",
+          host: "https://tutoringbrains-backend-1.herokuapp.com/",
+        });
+      }
       newPeer.on("open", (id) => {
         socket.emit("join-room", ROOM_ID, id);
       });
       setPeer(newPeer);
     }
     return () => newPeer && newPeer.disconnect();
-  }, [ROOM_ID, setPeer, socket]);
-
-  useEffect(() => {
-    if (peer && videoStream) {
-      peer.on("call", (call) => {
-        console.log("ansering call");
-        call.answer(videoStream);
-        console.log("call done");
-        call.on("stream", (userVideoStream) => {
-          addVideoStream(userVideoStream, call);
-        });
-      });
-    }
-  }, [videoStream, addVideoStream, peer]);
+  }, [ROOM_ID, setPeer, socket, user]);
 
   useEffect(() => {
     if (socket && peer) {
@@ -107,6 +130,19 @@ const Room = () => {
         });
     }
   }, [socket, ROOM_ID, addVideoStream, connectToNewUser, peer]);
+
+  useEffect(() => {
+    if (peer && videoStream) {
+      peer.on("call", (call) => {
+        console.log("ansering call");
+        call.answer(videoStream);
+        console.log("call done");
+        call.on("stream", (userVideoStream) => {
+          addVideoStream(userVideoStream, call);
+        });
+      });
+    }
+  }, [videoStream, addVideoStream, peer]);
 
   const onMicClickHandler = () => {
     // setIsMicEnabled((prev) => !prev);
@@ -198,23 +234,45 @@ const Room = () => {
         video: { mediaSource: "screen" },
       })
       .then((stream) => {
-        const newSocket = io(`http://192.168.29.30:8080/`);
-        const newPeer = new Peer(undefined, {
-          path: "/api/v1/peerjs",
-          host: "/",
-          port: "8080",
-        });
-        newPeer.on("open", (id) => {
-          newSocket.emit("join-room", ROOM_ID, id);
-          newSocket.emit("ready");
-          const call = peer.call(id, stream);
-          call.on("stream", () => {
-            console.log("elfmds");
+        let ssSocket;
+
+        if (process.env.NODE_ENV === "development") {
+          ssSocket = io(`http://192.168.29.30:8080/`);
+        } else {
+          ssSocket = io(`https://tutoringbrains-backend-1.herokuapp.com/`);
+        }
+
+        let ssPeer;
+        if (process.env.NODE_ENV === "development") {
+          ssPeer = new Peer(`ss-${user.id}`, {
+            path: "/api/v1/peerjs",
+            host: "/",
+            port: "8080",
           });
+        } else {
+          ssPeer = new Peer(user.id, {
+            path: "/api/v1/peerjs",
+            host: "https://tutoringbrains-backend-1.herokuapp.com/",
+          });
+        }
+
+        ssPeer.on("open", (id) => {
+          ssSocket.emit("join-screen-share", ROOM_ID, id);
         });
+        ssPeer.on("call", (call) => {
+          console.log("ansering ss call");
+          call.answer(stream);
+          console.log("call done");
+          // call.on("stream", (userVideoStream) => {
+          //   addVideoStream(userVideoStream, call);
+          // });
+        });
+        // ssPeer.disconnect();
+        // socket.emit("disconnected", ROOM_ID, defaultUser);
       })
       .catch((err) => {
         console.log("error");
+        console.log(err);
         videoStream.getTracks().forEach(function (track) {
           if (track.readyState === "live") {
             track.stop();
@@ -231,7 +289,11 @@ const Room = () => {
       onMouseOut={onRoomMouseOutHandler}
     >
       <div className={classes["room__participants--container"]}>
-        <Participants participants={participants} isMicEnabled={isMicEnabled} />
+        <Participants
+          participants={participants}
+          screenShare={ssParticipant}
+          isMicEnabled={isMicEnabled}
+        />
       </div>
       <ToolBar
         onCallEndClickHandler={onCallEndClickHandler}

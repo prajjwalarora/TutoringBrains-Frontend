@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,16 +6,11 @@ import useHttp from "../../hooks/use-http";
 import { registerDevice } from "../../lib/api";
 import { authActions } from "../../store/auth-slice";
 import { userActions } from "../../store/user-slice";
-import classes from "./FaceRecognition.module.css";
+import classes from "./FaceVerification.module.css";
 
 let id;
-var stream;
-
-const FaceRecognition = () => {
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
+const FaceVerification = () => {
   const { sendRequest, status, data, error } = useHttp(registerDevice);
-  const [imageCapture, setImageCapture] = useState();
   const auth = useSelector((data) => data.auth);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -64,39 +59,6 @@ const FaceRecognition = () => {
     }
   }, [status, error, history, data, dispatch]);
 
-  function getMediaStream() {
-    window.navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(function (mediaStream) {
-        stream = mediaStream;
-        let mediaStreamTrack = mediaStream.getVideoTracks()[0];
-        let imageCapture = new ImageCapture(mediaStreamTrack);
-        setImageCapture(imageCapture);
-        // console.log(imageCapture);
-      })
-      .catch(error);
-  }
-
-  function takePhoto(img1) {
-    const img = img1 || canvasRef.current;
-
-    imageCapture
-      .takePhoto()
-      .then((blob) => {
-        let url = window.URL.createObjectURL(blob);
-        img.src = url;
-
-        window.URL.revokeObjectURL(url);
-      })
-      .catch(error);
-  }
-
-  useEffect(() => {
-    getMediaStream();
-    if (imageCapture) {
-      // takePhoto();
-    }
-  }, [imageCapture]);
   const registerDeviceHandler = () => {
     // sendRequest({
     //   token: auth.token,
@@ -112,21 +74,14 @@ const FaceRecognition = () => {
     <div className={classes["registration-outer"]}>
       <div className={classes["registration-container"]}>
         <h3>Face Registration</h3>
-        <p>this image will be used for future verifications.</p>
-        <p>is this you?</p>
-        <div>
-          <img ref={canvasRef} alt="" />
-          <video
-            ref={videoRef}
-            width={400}
-            height={400}
-            // controls
-            autoPlay={true}
-          ></video>
-        </div>
+        <p>
+          This device will be registered with this account and will not be
+          accessible from somewhere else after that.
+        </p>
+        <p>Want to Authorize this device?</p>
         <div className={classes["btn-container"]}>
           <button onClick={registerDeviceHandler} className="btn btn-dark-blue">
-            Capture
+            Authorize
           </button>
           <button onClick={logoutHandler} className="btn">
             logout
@@ -137,4 +92,4 @@ const FaceRecognition = () => {
   );
 };
 
-export default FaceRecognition;
+export default FaceVerification;

@@ -10,7 +10,7 @@ import classes from "./AccountDashboard.module.css";
 
 let id;
 const AccountDashboard = () => {
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const {
     sendRequest: updateUser,
     status: updateUserStatus,
@@ -88,7 +88,7 @@ const AccountDashboard = () => {
     console.log(formData);
 
     const mobileNumber = formData["phone"];
-    if (mobileNumber.length != 10) {
+    if (mobileNumber.length !== 10) {
       return toast.error("Mobile Number Inavlid...", {
         ...toastConfig,
       });

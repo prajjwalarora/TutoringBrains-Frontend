@@ -2,9 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const token = localStorage.getItem("token");
 const tbDevice = localStorage.getItem("tbDevice");
+const tbFaceVerify = localStorage.getItem("tbFaceVerify");
 let initialState = token
-  ? { token: token, isLoggedIn: true, currDeviceFingerPrint: tbDevice }
-  : { token: null, isLoggedIn: false, currDeviceFingerPrint: null };
+  ? {
+      token: token,
+      isLoggedIn: true,
+      currDeviceFingerPrint: tbDevice,
+      isFaceVerified: tbFaceVerify,
+    }
+  : {
+      token: null,
+      isLoggedIn: false,
+      currDeviceFingerPrint: null,
+      isFaceVerified: null,
+    };
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
@@ -16,13 +27,19 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.currDeviceFingerPrint = action.payload.currDeviceFingerPrint;
     },
+    setFaceVerified(state, action) {
+      localStorage.setItem("tbFaceVerify", action.payload.isFaceVerified);
+      state.isFaceVerified = action.payload.isFaceVerified;
+    },
     logout(state, action) {
       localStorage.removeItem("token");
       localStorage.removeItem("tbDevice");
       localStorage.removeItem("user");
+      localStorage.removeItem("tbFaceVerify");
       state.token = null;
       state.isLoggedIn = false;
       state.currDeviceFingerPrint = null;
+      state.isFaceVerified = null;
     },
   },
 });

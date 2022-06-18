@@ -17,6 +17,8 @@ import { useHistory } from "react-router-dom";
 import DeviceRegistrationPage from "./pages/DeviceRegistrationPage";
 import InvalidDevicePage from "./pages/InvalidDevicePage";
 import { authActions } from "./store/auth-slice";
+import FaceRecognitionPage from "./pages/FaceRecognitionPage";
+import FaceVerificationPage from "./pages/FaceVerificationPage";
 
 function App() {
   const { sendRequest, status, data, error } = useHttp(getMe);
@@ -48,21 +50,25 @@ function App() {
       history.push("/");
     }
   }, [dispatch, error, data, status, history]);
-
   useEffect(() => {
-    if (
-      auth.isLoggedIn &&
-      user &&
-      ((user.deviceFingerprint && user.deviceFingerprint.length === 0) ||
-        !user.deviceFingerprint)
-    ) {
-      history.push("/registerDevice");
-    } else if (
-      auth.currDeviceFingerPrint &&
-      user.deviceFingerprint !== auth.currDeviceFingerPrint
-    ) {
-      history.push("/registerDevice");
-    }
+    // if (
+    //   auth.isLoggedIn &&
+    //   user &&
+    //   ((user.deviceFingerprint && user.deviceFingerprint.length === 0) ||
+    //     !user.deviceFingerprint)
+    // ) {
+    //   history.push("/registerDevice");
+    // } else if (
+    //   auth.currDeviceFingerPrint &&
+    //   user.deviceFingerprint !== auth.currDeviceFingerPrint
+    // ) {
+    //   history.push("/registerDevice");
+    // }
+    // else if (auth.isLoggedIn && !user.avatar) {
+    //   history.push("/faceAuthentication");
+    // } else if (auth.isLoggedIn && !auth.isFaceVerified) {
+    //   history.push("/faceVerification");
+    // }
   }, [user, history, auth]);
   return (
     <Fragment>
@@ -91,6 +97,20 @@ function App() {
         <Route path="/registerDevice" exact>
           {auth.isLoggedIn ? (
             <DeviceRegistrationPage />
+          ) : (
+            <Redirect to="/auth/login" />
+          )}
+        </Route>
+        <Route path="/faceAuthentication" exact>
+          {auth.isLoggedIn ? (
+            <FaceRecognitionPage />
+          ) : (
+            <Redirect to="/auth/login" />
+          )}
+        </Route>
+        <Route path="/faceVerification" exact>
+          {auth.isLoggedIn ? (
+            <FaceVerificationPage />
           ) : (
             <Redirect to="/auth/login" />
           )}
