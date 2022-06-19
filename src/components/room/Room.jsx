@@ -23,6 +23,8 @@ const Room = () => {
   const [defaultUser, setDefaultUser] = useState();
   const history = useHistory();
 
+  console.log(participants);
+
   const addVideoStream = useCallback(
     function (stream, call, type = "user") {
       if (call) {
@@ -45,11 +47,23 @@ const Room = () => {
           });
         }
       } else {
-        setParticipants((prev) => [...prev, { stream }]);
+        setParticipants((prev) => [
+          ...prev,
+          { user: { peerId: user.id }, stream },
+        ]);
       }
     },
-    [setParticipants]
+    [setParticipants, user]
   );
+
+  const removeUser = useCallback((userId) => {
+    setParticipants((prevParticipants) => {
+      const newParticipants = prevParticipants.filter(
+        (participant) => participant.user.peerId !== userId
+      );
+      return newParticipants;
+    });
+  }, []);
 
   const connectToNewUser = useCallback(
     function (userId, stream) {
@@ -109,6 +123,7 @@ const Room = () => {
       newPeer.on("open", (id) => {
         socket.emit("join-room", ROOM_ID, id);
       });
+      setDefaultUser(user.id);
       setPeer(newPeer);
     }
     return () => newPeer && newPeer.disconnect();
@@ -128,10 +143,16 @@ const Room = () => {
             connectToNewUser(userId, stream);
           });
 
+          socket.on("user-disconnected", (userId) => {
+            // connectToNewUser(userId, stream);
+            removeUser(userId);
+            console.log("dissconnected:" + userId);
+          });
+
           socket.emit("ready");
         });
     }
-  }, [socket, ROOM_ID, addVideoStream, connectToNewUser, peer]);
+  }, [socket, ROOM_ID, removeUser, addVideoStream, connectToNewUser, peer]);
 
   useEffect(() => {
     if (peer && videoStream) {
@@ -199,7 +220,6 @@ const Room = () => {
     });
     peer.disconnect();
     socket.emit("disconnected", ROOM_ID, defaultUser);
-    history.replace("/");
   };
 
   useEffect(() => {
@@ -294,6 +314,7 @@ const Room = () => {
     >
       <div className={classes["room__participants--container"]}>
         <Participants
+          participantsCount={participants.length}
           participants={participants}
           screenShare={ssParticipant}
           isMicEnabled={isMicEnabled}

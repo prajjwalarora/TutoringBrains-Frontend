@@ -10,16 +10,18 @@ const Participants = (props) => {
   console.log(props.screenShare);
 
   useEffect(() => {
-    if (props.participants) {
-      setParticipantCount(props.participants.length);
+    if (props.participantsCount) {
+      setParticipantCount(props.participantsCount);
     }
     if (props.screenShare) {
       setSSCount(1);
     }
-  }, [props]);
+  }, [props, props.participantsCount]);
   useEffect(() => {
     if (ssCount === 0) {
-      if (participantCount > 1) {
+      if (participantCount === 1) {
+        setColCount(1);
+      } else if (participantCount > 1) {
         if (participantCount > 1 && participantCount < 3) {
           setColCount(2);
         } else if (participantCount >= 3 && participantCount < 5) {
@@ -41,6 +43,7 @@ const Participants = (props) => {
       }
     }
   }, [participantCount, ssCount]);
+
   return (
     <div
       className={classes["participants__container"]}
@@ -70,6 +73,7 @@ const Participants = (props) => {
           {props.participants.map((participant, index) => (
             <Participant
               key={index}
+              participantType="user"
               participant={participant}
               name="Prajjwal Arora"
               isMicEnabled={props.isMicEnabled}
@@ -82,6 +86,7 @@ const Participants = (props) => {
             (participant, index) =>
               index < 4 && (
                 <Participant
+                  participantType="user"
                   key={index}
                   participant={participant}
                   name="Prajjwal Arora"

@@ -53,7 +53,13 @@ const Participant = (props) => {
       </div>
       <video
         ref={videoRef}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: `${
+            props.participantType === "user" ? "cover" : "contain"
+          }`,
+        }}
       />
       <p className={classes["name"]}>{props.name}</p>
     </div>
