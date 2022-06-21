@@ -124,3 +124,22 @@ hr.separator {
   font-size: 1.4rem;
   margin: 0.5rem;
 }
+
+.no-data-container {
+  width: 100%;
+  padding: 8rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-data-container img {
+  height: auto;
+  width: 20rem;
+  margin-bottom: 2rem;
+}
+
+.no-data-container p {
+  font-size: 1.4rem;
+}

@@ -14,6 +14,7 @@ import AssessmentDashboard from "./assessmentDashboard/AssessmentDashboard";
 import classes from "./AdminDashboard.module.css";
 import { useHistory } from "react-router-dom";
 import CreateAssessment from "./assessmentDashboard/createAssessment/CreateAssessment";
+import CreateClass from "./classDashboard/createClass/CreateClass";
 
 const AdminDashboard = () => {
   const { sendRequest, status, data, error } = useHttp(getMe);
@@ -44,6 +45,10 @@ const AdminDashboard = () => {
   const onCreateAssessmentClickHandler = () => {
     history.push("/dashboard/user/assessments/create-assessment");
   };
+  const onCreateClassClickHandler = () => {
+    history.push("/dashboard/user/classes/schedule-class");
+    console.log("nsnjsd");
+  };
   console.log(params);
 
   return (
@@ -53,8 +58,16 @@ const AdminDashboard = () => {
         <div className={classes["dashboard-sidebar"]}>
           <AdminDashboardSideNav />
         </div>
-        {params.section === "home" && <MainDashboard />}
-        {params.section === "classes" && <ClassDashboard />}
+        {params.section === "home" && (
+          <MainDashboard
+            onCreateClassClickHandler={onCreateClassClickHandler}
+          />
+        )}
+        {params.section === "classes" && !params.action && (
+          <ClassDashboard
+            onCreateClassClickHandler={onCreateClassClickHandler}
+          />
+        )}
         {params.section === "assessments" && !params.action && (
           <AssessmentDashboard
             onCreateAssessmentClickHandler={onCreateAssessmentClickHandler}
@@ -63,6 +76,9 @@ const AdminDashboard = () => {
         {params.section === "account" && <AccountDashboard />}
         {params.section === "assessments" &&
           params.action === "create-assessment" && <CreateAssessment />}
+        {params.section === "classes" && params.action === "schedule-class" && (
+          <CreateClass />
+        )}
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ const AssessmentWindow = (props) => {
 
   useEffect(() => {
     const data = props.quizData[0];
+
     setQuizData(data);
   }, [props.quizData]);
   useEffect(() => {
@@ -65,9 +66,8 @@ const AssessmentWindow = (props) => {
         localStorage.getItem("assessmentResponseData")
       );
       storedAssessmentResponseData["selectedAnswers"][props.subjectId][
-        questionData[currentQn - 1].id
+        questionData[currentQn - 1].correctAnswer
       ] = checkedAns;
-
       localStorage.setItem(
         "assessmentResponseData",
         JSON.stringify(storedAssessmentResponseData)
@@ -83,6 +83,7 @@ const AssessmentWindow = (props) => {
   };
   const onNextSectionClick = () => {
     const queryParams = new URLSearchParams(location.search);
+    props.setQuizCompleted((prev) => [...prev, quizData.id]);
     queryParams.delete("quizId");
     history.replace({
       search: queryParams.toString(),
@@ -92,11 +93,7 @@ const AssessmentWindow = (props) => {
     <Fragment>
       {quizData && (
         <>
-          <Header
-            isNav={false}
-            isTimer={true}
-            totalTime={quizData.timeDuration}
-          />
+          <Header isNav={false} isTimer={true} totalTime={quizData.duration} />
           <div className="container-nh">
             <div className="container-inner">
               <div className={classes["assess-container"]}>

@@ -4,20 +4,19 @@ import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
+const PieChart = (props) => {
   const data = {
-    labels: ["You", "Top 10%", "Toop 30%", "Top 40%"],
+    labels: ["10%", "25%", "50%", "75%", "100%"],
     datasets: [
       {
         label: "# of Votes",
-        data: [12, 19, 3, 5, 2],
+        data: props.data || [0, 0, 1, 0, 0],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
           "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
+          "rgba(75, 192, 192, 0.8)",
           "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
         ],
         borderColor: [
           "rgba(255, 99, 132, 1)",
@@ -25,7 +24,6 @@ const PieChart = () => {
           "rgba(255, 206, 86, 1)",
           "rgba(75, 192, 192, 1)",
           "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
         ],
         borderWidth: 1,
       },

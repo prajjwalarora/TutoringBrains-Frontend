@@ -1,18 +1,44 @@
-.dashboard {
-  background-color: rgba(241, 250, 238, 0.8);
-  min-height: 100vh;
-}
-.dashboard-inner {
-  display: flex;
-}
-.dashboard-sidebar {
-  width: 20%;
-}
 .dashboard-main {
-  padding: 3rem 0;
   width: 80%;
+  overflow-y: scroll;
+  position: relative;
+}
+.class-dashboard {
+  width: 100%;
+}
+.class-dashboard::-webkit-scrollbar,
+.dashboard-main::-webkit-scrollbar {
+  display: none;
+}
+.header {
+  margin-bottom: 0rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 {
+  color: #101d31;
+  font-size: 3.2em;
+}
+.class-card-container {
+  padding: 3rem 0;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 2rem;
+  gap: 2rem;
   justify-content: space-between;
+}
+
+.new-assessment-btn {
+  display: flex;
+  align-items: center;
+  padding: 1rem 3rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.new-assessment-btn:hover {
+  opacity: 0.8;
 }

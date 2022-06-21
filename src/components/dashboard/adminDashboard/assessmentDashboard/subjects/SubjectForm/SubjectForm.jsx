@@ -116,7 +116,7 @@ const SubjectForm = (props) => {
               id="duration"
               name="duration"
               min={1}
-              placeholder="Please enter ubject duration."
+              placeholder="Please enter subject duration."
             />
           </div>
           {formError && <p className="error-msg">{formError}</p>}

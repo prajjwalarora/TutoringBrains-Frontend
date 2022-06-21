@@ -25,8 +25,18 @@ const MainDashboard = () => {
   }, [setTime, setMinute, time]);
   return (
     <div className={classes["dashboard-main"]}>
-      <DashboardCard cardType={1} />
-      <DashboardCard cardType={2} />
+      <DashboardCard
+        cardType={1}
+        statusType={1}
+        cardData={{}}
+        onArrowClickHandler={() => {}}
+      />
+      <DashboardCard
+        cardType={2}
+        statusType={1}
+        cardData={{}}
+        onArrowClickHandler={() => {}}
+      />
     </div>
   );
 };

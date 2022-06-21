@@ -51,7 +51,7 @@ const CreateAssessmentForm = (props) => {
             placeholder="Please enter assessment name."
           />
         </div>
-        <div className={classes["form-field"]}>
+        {/* <div className={classes["form-field"]}>
           <label htmlFor="name">Duration(in minutes)*</label>
           <input
             type="number"
@@ -60,14 +60,14 @@ const CreateAssessmentForm = (props) => {
             min={1}
             placeholder="Please enter assessment duration."
           />
-        </div>
+        </div> */}
         <div className={classes["form-field"]}>
           <label htmlFor="examDate">Date</label>
           <input
-            type="date"
+            type="datetime-local"
             id="examDate"
             name="examDate"
-            min={new Date().toISOString().split("T")[0]}
+            min={new Date().toISOString()}
             placeholder="Please select assessment date."
           />
         </div>

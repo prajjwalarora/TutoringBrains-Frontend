@@ -36,3 +36,14 @@
 .btn-container button {
   width: 100%;
 }
+.publish-btn {
+  margin-left: 1rem;
+  background-color: transparent;
+  color: var(--color-dark-blue);
+  transition: all 0.2s ease-in-out;
+}
+
+.publish-btn:hover {
+  background-color: var(--color-dark-blue);
+  color: #fff;
+}

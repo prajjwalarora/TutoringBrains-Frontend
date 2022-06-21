@@ -70,7 +70,7 @@
 .card-3 .text-container h3 span {
   background-color: rgba(7, 7, 7, 0.3);
 }
-.timer {
+.date {
   position: absolute;
   bottom: 10%;
   left: 2rem;
@@ -78,7 +78,22 @@
   align-items: center;
   color: #101e32c9;
 }
-.timer span {
+.date span {
+  display: inline-block;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  font-weight: 600;
+}
+
+.time {
+  position: absolute;
+  bottom: 20%;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  color: #101e32c9;
+}
+.time span {
   display: inline-block;
   font-size: 1.2rem;
   margin-left: 0.5rem;

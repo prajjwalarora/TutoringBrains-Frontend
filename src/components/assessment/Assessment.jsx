@@ -11,10 +11,13 @@ import { getAssessment } from "../../lib/api";
 import { useSelector } from "react-redux";
 
 import classes from "./Assessment.module.css";
+import SpeechVerification from "../speechVerification/SpeechVerification";
 
 const Assessment = () => {
   const [searchParams, setSearchParams] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isAudioVerified, setIsAudioVerified] = useState(true);
+  const [quizCompleted, setQuizCompleted] = useState([]);
   const [assessmentResponseData, setAssessmentResponseData] = useState(null);
 
   const [quiz, setQuiz] = useState([]);
@@ -71,12 +74,12 @@ const Assessment = () => {
   useEffect(() => {
     if (status === "completed" && !error) {
       const responseData = {
-        assessmentId: data.id,
-        userId: user.id,
+        assessment: data.id,
+        user: user.id,
         selectedAnswers: {},
       };
       data.subjects.forEach((sub) => {
-        responseData["selectedAnswers"][sub.id] = [];
+        responseData["selectedAnswers"][sub.id] = {};
       });
       setAssessmentResponseData(responseData);
       const shiffledQuiz = shuffle(shuffle(data.subjects));
@@ -110,6 +113,16 @@ const Assessment = () => {
     toggleFullScreen();
     setIsFullScreen(true);
   };
+  const onfullScreenCloseClickHandler = () => {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+    setIsFullScreen(false);
+  };
   return (
     <Fragment>
       {!isFullScreen && (
@@ -122,18 +135,23 @@ const Assessment = () => {
           </div>
         </div>
       )}
-      {(!searchParams || (searchParams && !searchParams.has("quizId"))) && (
-        <AssessmentPreStart
-          quizHeading={data ? data.name : ""}
-          quizInfo={quizInfo}
-          toggleFullScreen={toggleFullScreen}
-          isFullScreen={isFullScreen}
-          setIsFullScreen={setIsFullScreen}
-        />
-      )}
-      {searchParams && searchParams.has("quizId") && (
+      {!isAudioVerified && <SpeechVerification />}
+      {isAudioVerified &&
+        (!searchParams || (searchParams && !searchParams.has("quizId"))) && (
+          <AssessmentPreStart
+            quizHeading={data ? data.name : ""}
+            quizCompleted={quizCompleted}
+            quizInfo={quizInfo}
+            toggleFullScreen={toggleFullScreen}
+            onfullScreenCloseClickHandler={onfullScreenCloseClickHandler}
+            isFullScreen={isFullScreen}
+            setIsFullScreen={setIsFullScreen}
+          />
+        )}
+      {isAudioVerified && searchParams && searchParams.has("quizId") && (
         <AssessmentWindow
           quizData={quiz.filter((q) => q.id === searchParams.get("quizId"))}
+          setQuizCompleted={setQuizCompleted}
           subjectId={searchParams.get("quizId")}
         />
       )}

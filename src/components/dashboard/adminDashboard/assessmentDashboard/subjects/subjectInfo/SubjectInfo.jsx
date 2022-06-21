@@ -28,7 +28,7 @@ const SubjectInfo = (props) => {
           {props.questions &&
             props.questions.map((question, index) => (
               <QuestionInfo
-                key={question._id}
+                key={index}
                 count={index + 1}
                 questionData={question}
               />

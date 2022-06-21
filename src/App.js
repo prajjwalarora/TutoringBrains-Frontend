@@ -19,6 +19,7 @@ import InvalidDevicePage from "./pages/InvalidDevicePage";
 import { authActions } from "./store/auth-slice";
 import FaceRecognitionPage from "./pages/FaceRecognitionPage";
 import FaceVerificationPage from "./pages/FaceVerificationPage";
+import ClassPage from "./pages/ClassPage";
 
 function App() {
   const { sendRequest, status, data, error } = useHttp(getMe);
@@ -51,24 +52,21 @@ function App() {
     }
   }, [dispatch, error, data, status, history]);
   useEffect(() => {
-    // if (
-    //   auth.isLoggedIn &&
-    //   user &&
-    //   ((user.deviceFingerprint && user.deviceFingerprint.length === 0) ||
-    //     !user.deviceFingerprint)
-    // ) {
-    //   history.push("/registerDevice");
-    // } else if (
-    //   auth.currDeviceFingerPrint &&
-    //   user.deviceFingerprint !== auth.currDeviceFingerPrint
-    // ) {
-    //   history.push("/registerDevice");
-    // }
-    // else if (auth.isLoggedIn && !user.avatar) {
-    //   history.push("/faceAuthentication");
-    // } else if (auth.isLoggedIn && !auth.isFaceVerified) {
-    //   history.push("/faceVerification");
-    // }
+    if (
+      auth.isLoggedIn &&
+      user &&
+      ((user.deviceFingerprint && user.deviceFingerprint.length === 0) ||
+        !user.deviceFingerprint)
+    ) {
+      history.push("/registerDevice");
+    } else if (
+      auth.currDeviceFingerPrint &&
+      user.deviceFingerprint !== auth.currDeviceFingerPrint
+    ) {
+      history.push("/registerDevice");
+    } else if (auth.isLoggedIn && !user.avatar) {
+      history.push("/faceAuthentication");
+    }
   }, [user, history, auth]);
   return (
     <Fragment>
@@ -129,6 +127,9 @@ function App() {
         </Route>
         <Route path="/room">
           {!auth.isLoggedIn ? <Redirect to="/auth/login" /> : <Room />}
+        </Route>
+        <Route path="/classess">
+          {!auth.isLoggedIn ? <Redirect to="/auth/login" /> : <ClassPage />}
         </Route>
         <Route path="/debug" exact={true}>
           <DebugPage />

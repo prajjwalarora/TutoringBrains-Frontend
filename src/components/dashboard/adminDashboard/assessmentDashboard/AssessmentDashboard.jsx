@@ -4,16 +4,19 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DashboardChip from "../dashboardChip/DashboardChip";
 import classes from "./AssessmentDashboard.module.css";
 import useHttp from "../../../../hooks/use-http";
+import NoDataFound from "../../../../assets/images/no_data_found.svg";
 import {
   getPublishedAssessment,
   getUnpublishedAssessment,
 } from "../../../../lib/api";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Loader from "../../../ui/loader/Loader";
 
 const AssessmentDashboard = (props) => {
   const [unpublishedAssessments, setUnpublishedAssessments] = useState(null);
   const [publishedAssessments, setPublishedAssessments] = useState(null);
+  const [completedAssessments, setCompletedAssessments] = useState(null);
   const auth = useSelector((data) => data.auth);
   const { sendRequest, data, status, error } = useHttp(
     getUnpublishedAssessment
@@ -48,7 +51,18 @@ const AssessmentDashboard = (props) => {
       publishedReqData
     ) {
       if (!publishedAssessments) {
-        setPublishedAssessments(publishedReqData.assessment);
+        const published = [];
+        const completed = [];
+
+        publishedReqData.assessment.forEach((assess) => {
+          if (assess.isExpired) {
+            completed.push(assess);
+          } else {
+            published.push(assess);
+          }
+        });
+        setPublishedAssessments(published);
+        setCompletedAssessments(completed);
       }
     }
   }, [
@@ -64,7 +78,7 @@ const AssessmentDashboard = (props) => {
       search: `?id=${assessmentId}`,
     });
   };
-
+  console.log(unpublishedAssessments);
   return (
     <div className={classes["assessment-dashboard"]}>
       <div className={classes["assessment-upcoming"]}>
@@ -80,68 +94,113 @@ const AssessmentDashboard = (props) => {
             Create Assessment
           </button>
         </div>
-        <div className={classes["assessment-card-container"]}>
-          {unpublishedAssessments &&
-            unpublishedAssessments.map((assessment, index) => (
-              <DashboardCard
-                key={index}
-                cardType={index === 0 ? 1 : (index % 2) + 1}
-                statusType={1}
-                cardData={assessment}
-                onArrowClickHandler={onArrowClickHandler.bind(
-                  null,
-                  assessment["_id"]
-                )}
-              />
-            ))}
+        {status === "pending" && (
+          <div className="no-data-container">
+            <Loader />
+          </div>
+        )}
+        {unpublishedAssessments && unpublishedAssessments.length > 0 && (
+          <div className={classes["assessment-card-container"]}>
+            {unpublishedAssessments &&
+              unpublishedAssessments.map((assessment, index) => (
+                <DashboardCard
+                  key={index}
+                  cardType={index === 0 ? 1 : (index % 2) + 1}
+                  statusType={1}
+                  cardData={assessment}
+                  onArrowClickHandler={onArrowClickHandler.bind(
+                    null,
+                    assessment["_id"]
+                  )}
+                />
+              ))}
 
-          {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
-          {unpublishedAssessments && unpublishedAssessments.length === 0 && (
-            <p className={classes["assessment-null"]}>
-              No Unpublished Assessments
-            </p>
+            {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
+          </div>
+        )}
+        {status === "completed" &&
+          unpublishedAssessments &&
+          unpublishedAssessments.length === 0 && (
+            <div className="no-data-container">
+              <img src={NoDataFound} alt="no data found" />
+              <p className={classes["assessment-null"]}>
+                No Unpublished Assessments
+              </p>
+            </div>
           )}
-        </div>
       </div>
 
       <div className={classes["assessment-upcoming"]}>
         <div className={classes["header"]}>
           <h1>Published Assessments</h1>
         </div>
-        <div className={classes["assessment-card-container"]}>
-          {publishedAssessments &&
-            publishedAssessments.map((assessment, index) => (
-              <DashboardCard
-                key={index}
-                cardType={index === 0 ? 1 : (index % 2) + 1}
-                statusType={1}
-                cardData={assessment}
-                onArrowClickHandler={onArrowClickHandler.bind(
-                  null,
-                  assessment["_id"]
-                )}
-              />
-            ))}
+        {publishedAssessments && publishedAssessments.length > 0 && (
+          <div className={classes["assessment-card-container"]}>
+            {publishedAssessments &&
+              publishedAssessments.map((assessment, index) => (
+                <DashboardCard
+                  key={index}
+                  cardType={index === 0 ? 1 : (index % 2) + 1}
+                  statusType={1}
+                  cardData={assessment}
+                  onArrowClickHandler={onArrowClickHandler.bind(
+                    null,
+                    assessment["_id"]
+                  )}
+                />
+              ))}
 
-          {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
-          {publishedAssessments && publishedAssessments.length === 0 && (
+            {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
+          </div>
+        )}
+        {publishedAssessments && publishedAssessments.length === 0 && (
+          <div className="no-data-container">
+            <img src={NoDataFound} alt="no data found" />
             <p className={classes["assessment-null"]}>
-              No Published Assessments
+              No Unpublished Assessments
             </p>
-          )}
-        </div>
+          </div>
+        )}
       </div>
       <div className={classes["assessment-past"]}>
         <div className={classes["header"]}>
-          <h1>Completed & Ongoing Assessments</h1>
+          <h1>Completed Assessments</h1>
         </div>
-        <div className={classes["assessment-card-container"]}>
-          <DashboardChip cardType={3} statusType={2} />
-          {/* <DashboardChip cardType={3} statusType={2} /> */}
-          {/* <DashboardChip cardType={3} statusType={2} /> */}
-          {/* <DashboardChip cardType={3} statusType={2} /> */}
-          {/* <DashboardChip cardType={3} statusType={2} /> */}
-        </div>
+        {(!completedAssessments ||
+          (status === "completed" &&
+            completedAssessments &&
+            completedAssessments.length === 0)) && (
+          <div className="no-data-container">
+            <img src={NoDataFound} alt="no data found" />
+            <p className={classes["assessment-null"]}>
+              No Completed Assessments
+            </p>
+          </div>
+        )}
+        {status === "pending" && (
+          <div className="no-data-container">
+            <Loader />
+          </div>
+        )}
+        {completedAssessments && completedAssessments.length > 0 && (
+          <div className={classes["assessment-card-container"]}>
+            {completedAssessments &&
+              completedAssessments.map((assessment, index) => (
+                <DashboardChip
+                  key={index}
+                  cardType={3}
+                  statusType={2}
+                  cardData={assessment}
+                  onArrowClickHandler={onArrowClickHandler.bind(
+                    null,
+                    assessment["_id"]
+                  )}
+                />
+              ))}
+
+            {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
+          </div>
+        )}
       </div>
     </div>
   );
