@@ -90,6 +90,11 @@ const AssessmentDashboard = (props) => {
         <div className={classes["header"]}>
           <h1>Upcoming Assessments</h1>
         </div>
+        {status === "pending" && (
+          <div className="no-data-container">
+            <Loader />
+          </div>
+        )}
         {assessments && assessments.length > 0 && (
           <div className={classes["assessment-card-container"]}>
             {assessments &&
@@ -122,17 +127,7 @@ const AssessmentDashboard = (props) => {
         <div className={classes["header"]}>
           <h1>Previous Assessments</h1>
         </div>
-        {(!previousAssessments ||
-          (status === "completed" &&
-            previousAssessments &&
-            previousAssessments.length === 0)) && (
-          <div className="no-data-container">
-            <img src={NoDataFound} alt="no data found" />
-            <p className={classes["assessment-null"]}>
-              No Completed Assessments
-            </p>
-          </div>
-        )}
+
         {status === "pending" && (
           <div className="no-data-container">
             <Loader />
@@ -155,6 +150,17 @@ const AssessmentDashboard = (props) => {
               ))}
 
             {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
+          </div>
+        )}
+        {(!previousAssessments ||
+          (status === "completed" &&
+            previousAssessments &&
+            previousAssessments.length === 0)) && (
+          <div className="no-data-container">
+            <img src={NoDataFound} alt="no data found" />
+            <p className={classes["assessment-null"]}>
+              No Completed Assessments
+            </p>
           </div>
         )}
       </div>

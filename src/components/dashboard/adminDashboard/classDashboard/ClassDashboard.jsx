@@ -23,7 +23,17 @@ const ClassDashboard = (props) => {
   useEffect(() => {
     if (status === "completed" && !error && data) {
       if (!scheduledClasses) {
-        setScheduledClasses(data.classes);
+        const previous = [];
+        const scheduled = [];
+        data.classes.forEach((cls) => {
+          if (!classes.isExpired) {
+            scheduled.push(cls);
+          } else {
+            previous.push(cls);
+          }
+        });
+        setScheduledClasses(scheduled);
+        setPreviousClasses(previous);
       }
     }
   }, [status, data, error, scheduledClasses]);
