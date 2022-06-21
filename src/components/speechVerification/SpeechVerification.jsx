@@ -19,7 +19,7 @@ import classes from "./SpeechVerification.module.css";
 
 const SpeechVerification = (props) => {
   const videoRef = useRef(null);
-  const [isError, setIsError] = useEffect(false);
+  const [isError, setIsError] = useState(false);
   const canvasRef = useRef(null);
   const { sendRequest, status, data, error } = useHttp(verifySpeech);
 
