@@ -36,23 +36,23 @@ const SpeechVerification = (props) => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  useLoader(
-    status,
-    error,
-    "Uploading audio...",
-    "Speech verified Successfully",
-    "Speech Upload failled"
-  );
+  // useLoader(
+  //   status,
+  //   error,
+  //   "Uploading audio...",
+  //   "Speech verified Successfully",
+  //   "Speech Upload failled"
+  // );
 
   useEffect(() => {
-    if (status === "completed" && !error) {
+    if (status === "completed") {
       if (!reqSent) {
-        if (data.text === "hi i'm doing something")
+        if (transcript === "hi i'm doing something")
           props.setIsAudioVerified(true);
         setReqSent(true);
       }
     }
-  }, [status, error, dispatch, history, data, reqSent, auth, user]);
+  }, [status, dispatch, history, data, reqSent, auth, user]);
 
   function utf8_to_b64(str) {
     return window.btoa(unescape(encodeURIComponent(str)));
@@ -88,7 +88,11 @@ const SpeechVerification = (props) => {
               Stop
             </button>
             <button className="btn btn-blue" onClick={textPrint}>
-              Verify
+              {status === "completed"
+                ? "Verified"
+                : status === "pending"
+                ? "Verifing"
+                : "Verify"}
             </button>
           </div>
           {/* <div className={classes["btn-wrapper"]}>

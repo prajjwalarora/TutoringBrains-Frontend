@@ -149,9 +149,6 @@ const Assessment = () => {
     }
     setIsFullScreen(false);
   };
-  console.log("====================================");
-  console.log(quizInfo);
-  console.log("====================================");
   return (
     <Fragment>
       {!isFullScreen && (
