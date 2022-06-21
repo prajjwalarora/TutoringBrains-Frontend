@@ -176,7 +176,7 @@ const CreateAssessment = () => {
           }
         />
       )}
-      {status === "completed" && !assessmentInfo && (
+      {!assessmentInfo && (
         <CreateAssessmentForm
           onCreated={(assessmentData) => {
             setAssessmentInfo(assessmentData);
@@ -186,7 +186,7 @@ const CreateAssessment = () => {
           }}
         />
       )}
-      {status === "completed" && assessmentInfo && (
+      {assessmentInfo && (
         <AssessmentInfo
           subjects={subjects}
           assessmentInfo={assessmentInfo}
