@@ -19,6 +19,7 @@ import classes from "./SpeechVerification.module.css";
 
 const SpeechVerification = (props) => {
   const videoRef = useRef(null);
+  const [isError, setIsError] = useEffect(false);
   const canvasRef = useRef(null);
   const { sendRequest, status, data, error } = useHttp(verifySpeech);
 
@@ -46,13 +47,26 @@ const SpeechVerification = (props) => {
 
   useEffect(() => {
     if (status === "completed") {
+      setIsError(false);
       console.log(transcript);
-      if (!reqSent) {
-        if (transcript === "do something") props.setIsAudioVerified(true);
-        setReqSent(true);
+      if (transcript === "do something") {
+        props.setIsAudioVerified(true);
+      } else {
+        setIsError(true);
       }
     }
-  }, [status, dispatch, history, data, props, transcript, reqSent, auth, user]);
+  }, [
+    status,
+    dispatch,
+    history,
+    data,
+    props,
+    setIsError,
+    transcript,
+    reqSent,
+    auth,
+    user,
+  ]);
 
   function utf8_to_b64(str) {
     return window.btoa(unescape(encodeURIComponent(str)));
@@ -72,6 +86,7 @@ const SpeechVerification = (props) => {
           <h3>Please verify audio!</h3>
           <p>Please Speak: do something</p>
           <p>Microphone: {listening ? "on" : "off"}</p>
+          {isError && <p className={classes["error"]}>Cannot verify</p>}
           {/* <p>{transcript}</p> */}
         </div>
         <div className={classes["btn-container"]}>
