@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import useHttp from "../../../../../hooks/use-http";
+import useLoader from "../../../../../hooks/use-loader";
 import { generateResult, getAssessment } from "../../../../../lib/api";
 import AssessmentInfo from "../assessmentInfo/AssessmentInfo";
 import PublishForm from "../publishForm/PublishForm";
@@ -35,6 +36,14 @@ const CreateAssessment = () => {
     }
   }, [location]);
 
+  useLoader(
+    generateResultStatus,
+    generateResultError,
+    "Generating Result",
+    "Result Generated Successfully",
+    "Failed"
+  );
+
   useEffect(() => {
     if (!assessmentInfo && searchParams && auth && !assessmentDataFetched) {
       if (searchParams["id"]) {
@@ -52,6 +61,18 @@ const CreateAssessment = () => {
       setSubjects(data.subjects);
     }
   }, [status, error, data]);
+
+  useEffect(() => {
+    if (
+      generateResultStatus === "completed" &&
+      !generateResultError &&
+      generateResultData
+    ) {
+      history.replace({
+        pathname: "/dashboard/user/assessments/",
+      });
+    }
+  }, [generateResultStatus, generateResultError, history, generateResultData]);
 
   const onClickCreateAndAddSubjectHandler = () => {
     const queryParams = new URLSearchParams(location.search);

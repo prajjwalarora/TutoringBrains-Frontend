@@ -44,6 +44,7 @@ const AssessmentPreStart = (props) => {
     localStorage.removeItem("assessmentResponseData");
     props.onfullScreenCloseClickHandler();
   };
+
   return (
     <Fragment>
       <Header />

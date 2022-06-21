@@ -176,3 +176,40 @@
 .searched-student p {
   font-size: 1.4rem;
 }
+
+.email-search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.email-search-container input {
+  width: 80%;
+}
+
+.search-wrapper {
+  margin-top: 1rem;
+}
+.searched-student {
+  padding: 1rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  background-color: rgba(36, 61, 97, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.searched-student:hover {
+  background-color: rgba(36, 61, 97, 0.5);
+}
+.searched-student p,
+.no-searched-student p {
+  font-size: 1.4rem;
+}
+
+.no-searched-student {
+  padding: 1rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  background-color: rgba(36, 61, 97, 0.04);
+}

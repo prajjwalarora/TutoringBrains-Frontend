@@ -52,21 +52,21 @@ function App() {
     }
   }, [dispatch, error, data, status, history]);
   useEffect(() => {
-    if (
-      auth.isLoggedIn &&
-      user &&
-      ((user.deviceFingerprint && user.deviceFingerprint.length === 0) ||
-        !user.deviceFingerprint)
-    ) {
-      history.push("/registerDevice");
-    } else if (
-      auth.currDeviceFingerPrint &&
-      user.deviceFingerprint !== auth.currDeviceFingerPrint
-    ) {
-      history.push("/registerDevice");
-    } else if (auth.isLoggedIn && !user.avatar) {
-      history.push("/faceAuthentication");
-    }
+    // if (
+    //   auth.isLoggedIn &&
+    //   user &&
+    //   ((user.deviceFingerprint && user.deviceFingerprint.length === 0) ||
+    //     !user.deviceFingerprint)
+    // ) {
+    //   history.push("/registerDevice");
+    // } else if (
+    //   auth.currDeviceFingerPrint &&
+    //   user.deviceFingerprint !== auth.currDeviceFingerPrint
+    // ) {
+    //   history.push("/registerDevice");
+    // } else if (auth.isLoggedIn && !user.avatar) {
+    //   history.push("/faceAuthentication");
+    // }
   }, [user, history, auth]);
   return (
     <Fragment>

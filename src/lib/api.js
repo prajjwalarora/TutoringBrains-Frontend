@@ -2,9 +2,9 @@ let url, url2;
 // const url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
 
 if (process.env.NODE_ENV === "development") {
-  url = `http://192.168.29.30:8080/api/v1`;
+  // url = `http://192.168.29.30:8080/api/v1`;
   url2 = `http://localhost:5000/auth`;
-  // url = `http://192.168.1.9:8080/api/v1`;
+  url = `http://192.168.6.71:8080/api/v1`;
 } else {
   url = `https://tutoringbrains-backend-1.herokuapp.com/api/v1`;
   url2 = `https://tutoringbrains-backend-flask.herokuapp.com/auth`;
@@ -227,20 +227,20 @@ export async function getStudent({ token, email }) {
 }
 
 //
-// export async function getUser(userData) {
-//   const response = await fetch(`${url}/user/${userData.userId}`, {
-//     headers: {
-//       "Content-type": "application/json",
-//       Authorization: `Bearer ${userData.authToken}`,
-//     },
-//   });
+export async function getUser({ token, userId }) {
+  const response = await fetch(`${url}/users/${userId}`, {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-//   const data = await response.json();
-//   if (!response.ok) {
-//     throw new Error(data.message || "Error in fetching user details");
-//   }
-//   return data.data;
-// }
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Error in fetching user details");
+  }
+  return data.data;
+}
 // export async function updateUser(userData) {
 //   const response = await fetch(`${url}/user`, {
 //     method: "PUT",

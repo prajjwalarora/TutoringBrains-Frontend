@@ -78,7 +78,7 @@ const AssessmentDashboard = (props) => {
       search: `?id=${assessmentId}`,
     });
   };
-  console.log(unpublishedAssessments);
+  console.log(publishedReqData);
   return (
     <div className={classes["assessment-dashboard"]}>
       <div className={classes["assessment-upcoming"]}>
@@ -134,6 +134,11 @@ const AssessmentDashboard = (props) => {
         <div className={classes["header"]}>
           <h1>Published Assessments</h1>
         </div>
+        {publishedReqStatus === "pending" && (
+          <div className="no-data-container">
+            <Loader />
+          </div>
+        )}
         {publishedAssessments && publishedAssessments.length > 0 && (
           <div className={classes["assessment-card-container"]}>
             {publishedAssessments &&
@@ -153,7 +158,10 @@ const AssessmentDashboard = (props) => {
             {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
           </div>
         )}
-        {publishedAssessments && publishedAssessments.length === 0 && (
+        {((publishedReqStatus === "completed" &&
+          publishedAssessments &&
+          publishedAssessments.length === 0) ||
+          !publishedAssessments) && (
           <div className="no-data-container">
             <img src={NoDataFound} alt="no data found" />
             <p className={classes["assessment-null"]}>

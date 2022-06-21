@@ -16,7 +16,7 @@ import SpeechVerification from "../speechVerification/SpeechVerification";
 const Assessment = () => {
   const [searchParams, setSearchParams] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isAudioVerified, setIsAudioVerified] = useState(true);
+  const [isAudioVerified, setIsAudioVerified] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState([]);
   const [assessmentResponseData, setAssessmentResponseData] = useState(null);
 
@@ -47,12 +47,37 @@ const Assessment = () => {
         //   toggleFullScreen();
         // }, 400);
         setIsFullScreen(false);
+        console.log("going out");
+        const storedAssessmentResponseData = JSON.parse(
+          localStorage.getItem("assessmentResponseData")
+        );
+        if (storedAssessmentResponseData["fullScreenExitFlagCount"]) {
+          storedAssessmentResponseData["fullScreenExitFlagCount"] += 1;
+        } else {
+          storedAssessmentResponseData["fullScreenExitFlagCount"] = 1;
+        }
+        localStorage.setItem(
+          "assessmentResponseData",
+          JSON.stringify(storedAssessmentResponseData)
+        );
       } else {
         console.log("going in");
       }
     });
     document.addEventListener("visibilitychange", (e) => {
       console.log("Window switch");
+      const storedAssessmentResponseData = JSON.parse(
+        localStorage.getItem("assessmentResponseData")
+      );
+      if (storedAssessmentResponseData["tabSwitchCount"]) {
+        storedAssessmentResponseData["tabSwitchCount"] += 1;
+      } else {
+        storedAssessmentResponseData["tabSwitchCount"] = 1;
+      }
+      localStorage.setItem(
+        "assessmentResponseData",
+        JSON.stringify(storedAssessmentResponseData)
+      );
     });
   }, []);
 
@@ -82,6 +107,7 @@ const Assessment = () => {
         responseData["selectedAnswers"][sub.id] = {};
       });
       setAssessmentResponseData(responseData);
+
       const shiffledQuiz = shuffle(shuffle(data.subjects));
       setQuiz(shiffledQuiz);
       const quizStatusInfo = shiffledQuiz.map((quiz) => {
@@ -123,6 +149,9 @@ const Assessment = () => {
     }
     setIsFullScreen(false);
   };
+  console.log("====================================");
+  console.log(quizInfo);
+  console.log("====================================");
   return (
     <Fragment>
       {!isFullScreen && (
@@ -135,7 +164,9 @@ const Assessment = () => {
           </div>
         </div>
       )}
-      {!isAudioVerified && <SpeechVerification />}
+      {!isAudioVerified && (
+        <SpeechVerification setIsAudioVerified={setIsAudioVerified} />
+      )}
       {isAudioVerified &&
         (!searchParams || (searchParams && !searchParams.has("quizId"))) && (
           <AssessmentPreStart

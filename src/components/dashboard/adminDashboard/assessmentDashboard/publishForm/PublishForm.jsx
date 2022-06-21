@@ -58,9 +58,11 @@ const PublishForm = (props) => {
 
   const addStudentClickHandler = () => {
     setStudents((prev) => {
-      const temp = prev.filter((student) => student === searchedStudent._id);
+      const temp = prev.filter(
+        (student) => student._id === searchedStudent._id
+      );
       if (temp.length === 0) {
-        return [...prev, searchedStudent._id];
+        return [...prev, searchedStudent];
       }
       return prev;
     });
@@ -72,7 +74,8 @@ const PublishForm = (props) => {
     const formData = Object.fromEntries(new FormData(event.target).entries());
 
     formData["published"] = true;
-    formData["students"] = students;
+    const studentIds = students.map((student) => student._id);
+    formData["students"] = studentIds;
     const assessmentId = new URLSearchParams(location.search).get("id");
     sendRequest({ token: auth.token, assessmentId, publishData: formData });
   };
@@ -91,11 +94,25 @@ const PublishForm = (props) => {
           onSubmit={formSubmitHandler}
         >
           <div className={classes["form-field"]}>
-            <label htmlFor="name">Search Student via Email*</label>
+            <label htmlFor="">Enrolled Students</label>
+            {(students && students.length) > 0 ? (
+              students.map((student, index) => (
+                <div key={index} className={classes["searched-student"]}>
+                  <p>{student.name}</p>
+                </div>
+              ))
+            ) : (
+              <div className={classes["no-searched-student"]}>
+                <p>No Student Select Yet.</p>
+              </div>
+            )}
+          </div>
+          <div className={classes["form-field"]}>
+            <label htmlFor="name">Add Student via Email*</label>
             <div className={classes["email-search-container"]}>
               <input
                 ref={studentEmailRef}
-                type="text"
+                type="email"
                 id="name"
                 placeholder="Please enter student email."
               />
@@ -104,20 +121,20 @@ const PublishForm = (props) => {
                 type="button"
                 onClick={onStudentSearchClickHandler}
               >
-                Search
+                {studentStatus === "pending" ? "Loading..." : "Search"}
               </button>
             </div>
-            <div className={classes["search-wrapper"]}>
-              <label htmlFor="name">Search Result*</label>
-              {searchedStudent && (
+            {searchedStudent && (
+              <div className={classes["search-wrapper"]}>
+                <label htmlFor="name">Search Result*</label>
                 <div
                   className={classes["searched-student"]}
                   onClick={addStudentClickHandler}
                 >
                   <p>{searchedStudent.name}</p>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
           {formError && <p className="error-msg">{formError}</p>}
           <div className={classes["form-btns"]}>

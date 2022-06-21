@@ -17,7 +17,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import classes from "./SpeechVerification.module.css";
 
-const SpeechVerification = () => {
+const SpeechVerification = (props) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const { sendRequest, status, data, error } = useHttp(verifySpeech);
@@ -47,7 +47,8 @@ const SpeechVerification = () => {
   useEffect(() => {
     if (status === "completed" && !error) {
       if (!reqSent) {
-        console.log(data);
+        if (data.text === "hi i'm doing something")
+          props.setIsAudioVerified(true);
         setReqSent(true);
       }
     }

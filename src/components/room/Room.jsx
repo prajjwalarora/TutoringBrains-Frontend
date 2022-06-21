@@ -218,8 +218,12 @@ const Room = () => {
         track.stop();
       }
     });
-    peer.disconnect();
     socket.emit("disconnected", ROOM_ID, defaultUser);
+    socket.close();
+    peer.disconnect();
+    history.push({
+      pathname: "/",
+    });
   };
 
   useEffect(() => {
