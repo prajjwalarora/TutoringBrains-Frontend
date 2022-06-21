@@ -59,7 +59,7 @@ const Participant = (props) => {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          userId: `class-${userName._id ? userName._id : ""}-${uuid()}`,
+          userId: `class-${userName.id ? userName.id : ""}-${uuid()}`,
           image: data,
         }),
       });

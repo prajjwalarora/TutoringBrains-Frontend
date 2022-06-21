@@ -46,13 +46,13 @@ const SpeechVerification = (props) => {
 
   useEffect(() => {
     if (status === "completed") {
+      console.log(transcript);
       if (!reqSent) {
-        if (transcript === "hi i'm doing something")
-          props.setIsAudioVerified(true);
+        if (transcript === "do something") props.setIsAudioVerified(true);
         setReqSent(true);
       }
     }
-  }, [status, dispatch, history, data, reqSent, auth, user]);
+  }, [status, dispatch, history, data, props, transcript, reqSent, auth, user]);
 
   function utf8_to_b64(str) {
     return window.btoa(unescape(encodeURIComponent(str)));
@@ -70,6 +70,7 @@ const SpeechVerification = (props) => {
       <div className={classes["registration-container"]}>
         <div>
           <h3>Please verify audio!</h3>
+          <p>Please Speak: do something</p>
           <p>Microphone: {listening ? "on" : "off"}</p>
           {/* <p>{transcript}</p> */}
         </div>

@@ -73,15 +73,15 @@ const ClassDashboard = (props) => {
             {/* <DashboardCard cardType={2} statusType={1} cardData={{}} /> */}
           </div>
         )}
-        {(status === "completed" &&
+        {((status === "completed" &&
           scheduledClasses &&
           scheduledClasses.length === 0) ||
-          (!scheduledClasses && (
-            <div className="no-data-container">
-              <img src={NoDataFound} alt="no data found" />
-              <p className={classes["assessment-null"]}>No Scheduled Classes</p>
-            </div>
-          ))}
+          !scheduledClasses) && (
+          <div className="no-data-container">
+            <img src={NoDataFound} alt="no data found" />
+            <p className={classes["assessment-null"]}>No Scheduled Classes</p>
+          </div>
+        )}
       </div>
       <div className={classes["class-past"]}>
         <div className={classes["header"]}>
